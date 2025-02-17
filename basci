@@ -1,0 +1,41 @@
+AI-Based Video Subtitle Generator – Architecture & Implementation
+This app will allow users to upload videos, and AI will generate subtitles automatically. It uses OpenAI’s Whisper for transcription and FFmpeg for handling video files.
+
+🛠️ Tech Stack
+Frontend (React & Android)
+Upload video files (MP4, MOV, etc.).
+Show progress while processing.
+Display and allow manual editing of subtitles.
+Download the final video with embedded subtitles.
+Backend (Express + Whisper AI + FFmpeg)
+Receive video uploads via Express API.
+Extract audio from video using FFmpeg.
+Transcribe audio using Whisper AI.
+Sync subtitles using timestamps.
+Generate subtitle files (SRT, VTT, hardcoded).
+Store & serve processed videos.
+CI/CD (Automated Deployments)
+Backend: Deploy with Docker & Kubernetes (AWS Lambda for scaling).
+Frontend: Vercel (for React) & Firebase App Distribution (for Android).
+Model Updates: Auto-deploy Whisper AI updates with GitHub Actions.
+🔄 Workflow
+1️⃣ User Uploads Video (Frontend)
+2️⃣ Express Backend Saves Video (AWS S3 / Firebase Storage)
+3️⃣ FFmpeg Extracts Audio (MP3/WAV)
+4️⃣ Whisper AI Generates Transcription
+5️⃣ Sync Subtitles with Timestamps
+6️⃣ Subtitles Provided in SRT/VTT or Burned into Video
+7️⃣ User Downloads Final Video
+
+🚀 APIs & Tools Used
+Whisper AI (OpenAI) → Speech-to-text transcription.
+FFmpeg → Extract & process video/audio.
+AWS S3 / Firebase Storage → Store videos & subtitles.
+Express & Multer → Handle file uploads.
+React & Android → UI for upload, playback, and subtitle editing.
+🔥 Additional Features
+✅ Language Detection – Detects & translates subtitles.
+✅ Manual Subtitle Editing – Users can adjust text & timings.
+✅ Hardcoded Subtitles – Option to burn subtitles into videos.
+✅ Multiple Formats – Export in SRT, VTT, MP4 with subtitles.
+
