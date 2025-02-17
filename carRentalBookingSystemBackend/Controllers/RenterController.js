@@ -3,7 +3,6 @@ const {CarRental}=require("../models/index")
 const bcrypt = require("bcrypt")
 const jwt=require("jsonwebtoken")
 const validator = require("validator")
-const { options } = require("../Routers/RenterRoutes")
 
 
 const signup=async(req,res)=>{
