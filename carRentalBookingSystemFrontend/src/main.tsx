@@ -3,8 +3,15 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 
+import { BrowserRouter } from 'react-router-dom'
+import RenterContextProvider from './state/RenterContextProvider.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <RenterContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </RenterContextProvider>
+   
   </StrictMode>,
 )
