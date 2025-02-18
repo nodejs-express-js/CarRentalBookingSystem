@@ -4,15 +4,14 @@ import useRenterLogin from "../hooks/useRenterLogin";
 
 const Login = () => {
     const [loginInfo,setLoginInfo] = useState({email:'',password:''});
-    const [error,loading,loginRenter]=useRenterLogin();
-    const handleSubmit = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const {error,loading,loginRenter}=useRenterLogin();
+    const handleSubmit = async(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-     
         if(loginInfo.email==='' || loginInfo.password==='') {
             alert('Please enter email and password');
             return;
         }
-
+        loginRenter(loginInfo.email, loginInfo.password);
     }
   return (
     <div>
@@ -27,7 +26,8 @@ const Login = () => {
                 <label>Password</label>
                 <input type="password" placeholder="Password" name="password" onChange={(e)=>{setLoginInfo({...loginInfo,password:e.target.value})}} value={loginInfo.password}/>
             </div>
-            <button onClick={(e)=>{handleSubmit(e)}}>Login</button>
+            <div>{error}</div>
+            <button onClick={(e)=>{handleSubmit(e)}} disabled={loading}>Login</button>
         </form>
     </div>
   )

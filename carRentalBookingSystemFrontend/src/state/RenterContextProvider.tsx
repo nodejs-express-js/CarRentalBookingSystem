@@ -7,7 +7,7 @@ type renterStateType={
 }
 type actionType={
     type:string;
-    payload?:renterStateType;
+    payload:renterStateType;
 }
 type childrenType={
     children:ReactNode;
@@ -19,13 +19,14 @@ type RenterContextProviderType={
 const renterReducer=(state:renterStateType,action:actionType)=>{
     switch(action.type){
         case 'ADD_RENTER':
-            return state;
+            localStorage.setItem('renter',JSON.stringify(action.payload))
+            return action.payload;
+        
         default:
             return state;
     }
 }
 export const RenterContext=createContext<null|RenterContextProviderType>(null);
-
 
 const RenterContextProvider = ({children}:childrenType) => {
 
@@ -36,8 +37,12 @@ const RenterContextProvider = ({children}:childrenType) => {
     });
 
      useEffect(()=>{
-
-        
+        const renter=localStorage.getItem('renter')
+        if(renter){
+            dispatch({type:'ADD_RENTER',payload:JSON.parse(renter)})
+        }else{
+            localStorage.removeItem('renter')
+        }
      },[])
 
   return (
