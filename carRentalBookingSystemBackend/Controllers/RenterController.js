@@ -36,7 +36,6 @@ try{
 
     const hashpassword=await HashPassword(password);
     const uuid = crypto.randomUUID().replace(/-/g, "");
-    console.log(process.env.AWS_ACCESS_ID,process.env.AWS_ACCESS_SECRET_KEY)
     const uploadParams = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: uuid+".jpg", 
@@ -59,8 +58,6 @@ try{
         Key: uuid+".jpg",
       });
       const url = await getSignedUrl(s3, command2, { expiresIn: 3600*24 }); // Expires in 1 hour (3600 sec)
-
-  
     res.status(200).send({
         email: carUser.email,
         token: token(carUser.id),
@@ -68,7 +65,6 @@ try{
     })
 }
 catch(err){
-    console.log(err)
     res.status(500).send({message:"signup request failed"});
 }
 }
@@ -87,8 +83,8 @@ const login=async(req,res)=>{
         const command2 = new GetObjectCommand({
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: carUser.profilePicture,
-          });
-          const url = await getSignedUrl(s3, command2, { expiresIn: 3600*24 }); // Expires in 1 hour (3600 sec)
+        });
+        const url = await getSignedUrl(s3, command2, { expiresIn: 3600*24 }); // Expires in 1 hour (3600 sec)
     
       
         res.status(200).send({

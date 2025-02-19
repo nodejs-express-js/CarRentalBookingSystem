@@ -11,16 +11,19 @@ const Navbar = () => {
         {state.token!==''
         
          ? 
-         <div>
+         <div className={Styles.minicontainer1}>
+          <img src={state.profilePicture} alt="profile pic" className={Styles.profilePic}></img>
+          <div>
             <div>Welcome {state.email}</div> 
             <div onClick={()=>{
                 navigate("/")
                 dispatch({type:"ADD_RENTER",payload:{email:'',token:'',profilePicture:'',}})
                 }}>logout</div>
+          </div>
         </div>
          
          :
-        <div className={Styles.minicontainer}>
+        <div className={Styles.minicontainer2}>
             <div onClick={()=>{navigate("/login")}}>Login</div>
             <div onClick={()=>{navigate("/signup")}}>Signup</div>
         </div>

@@ -8,9 +8,18 @@ padding: 1rem;
     cursor: pointer;
     font-size: 2rem;
 }
-.minicontainer{
+.profilePic{
+width: 4rem;
+height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.minicontainer1{
+display: flex;
+}
+.minicontainer2{
 
 }
-.minicontainer>div{
+.minicontainer2>div{
     cursor: pointer;
 }
