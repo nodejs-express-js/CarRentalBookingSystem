@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import useRenterLocation from "../hooks/useRenterLocation"
 import Navbar from "./Navbar"
 import useRenterLocationFetch from "../hooks/useRenterLocationFetch";
-
+import Styles from './RenterHome.module.css'
+import RenterHomeRight from "./RenterHomeRight";
 const RenterHome = () => {
   const {state}=useRenterLocation();
   const [currPage,setPageCurr]=useState(0);
@@ -12,7 +13,7 @@ const RenterHome = () => {
      const initialObserver=new IntersectionObserver(async(entries)=>{
       if(entries[0].isIntersecting){
            await fetchFewLocations(currPage,currPage+2);
-           setPageCurr(currPage+2)
+           setPageCurr(currPage+3)
       }
      },{ threshold: 1})
      if(currLast.current){
@@ -25,45 +26,41 @@ const RenterHome = () => {
   };
   },[state])
   useEffect(()=>{
-    fetchFewLocations(0,0+2);
-    setPageCurr(0+2)
+    fetchFewLocations(0,2);
+    setPageCurr(3)
   },[])
-  const showLocations=()=>{
-    return state.map((location,index)=>{
-      if(index===state.length-1){
-      return (<div key={index} ref={currLast}>
-        <div>{location.name}</div>
-        <img src={location.carRentalPhoto} alt={location.name}></img>
-        <div>{location.city}</div>
-        <div>{location.state}</div>
-        <div>{location.country}</div>
-        <div>{location.latitude}</div>
-        <div>{location.longitude}</div>
-      </div>)
-      }
-      else{
-      return (<div key={index}>
-        <div>{location.name}</div>
-        <img src={location.carRentalPhoto} alt={location.name}></img>
-        <div>{location.city}</div>
-        <div>{location.state}</div>
-        <div>{location.country}</div>
-        <div>{location.latitude}</div>
-        <div>{location.longitude}</div>
-      </div>)
-     
-      }
-  })
-}
+  const showLocations = () => {
+    return state.map((location, index) => (
+      <div 
+        key={index} 
+        ref={index === state.length - 1 ? currLast : null} 
+        className={Styles.locationCard}
+      >
+        <h2 className={Styles.locationName}>{location.name}</h2>
+        <img className={Styles.locationImage} src={location.carRentalPhoto} alt={location.name} />
+        <div className={Styles.locationDetails}>
+          <div>
+            <div><strong>City:</strong> {location.city}</div>
+            <div><strong>State:</strong> {location.state}</div>
+            <div><strong>Country:</strong> {location.country}</div>
+          </div>
+        </div>
+      </div>
+    ));
+  };
   return (
     <>
-        <Navbar></Navbar>
-        <div>
+    <Navbar />
+    <div className={Styles.container}>
+      <div className={Styles.minicontainer1}>
           {showLocations()}
-          {loading ? <div>Loading...</div> : <></>}
-          {error ? <div>{error}</div> : <></>}
-        </div>  
-    </>
+          {loading && <div className={Styles.loading}>Loading...</div>}
+          {error && <div className={Styles.error}>{error}</div>}
+      </div>
+     
+      <RenterHomeRight />
+    </div>  
+  </>
   )
 }
 
