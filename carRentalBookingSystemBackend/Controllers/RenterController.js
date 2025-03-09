@@ -57,7 +57,7 @@ try{
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: uuid+".jpg",
       });
-      const url = await getSignedUrl(s3, command2, { expiresIn: 3600*24 }); // Expires in 1 hour (3600 sec)
+      const url = await getSignedUrl(s3, command2, { expiresIn: 3600*24 }); 
     res.status(200).send({
         email: carUser.email,
         token: token(carUser.id),
@@ -65,6 +65,7 @@ try{
     })
 }
 catch(err){
+    console.log(err);
     res.status(500).send({message:"signup request failed"});
 }
 }

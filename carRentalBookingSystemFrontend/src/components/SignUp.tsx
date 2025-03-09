@@ -7,6 +7,7 @@ type signUpInfo={
   email: string,
   lastName: string,
   password: string,
+  confirmPassword: string,
   phone: string,
   address: string,
   profilePicture: File | null
@@ -17,6 +18,7 @@ const SignUp = () => {
         email: "",
         lastName: "",
         password: "",
+        confirmPassword: "",
         phone: "",
         address: "",
         profilePicture: null
@@ -32,7 +34,10 @@ const SignUp = () => {
             setError('Please fill all fields');
             return;
         }
-        
+        if(signupInfo.password!==signupInfo.confirmPassword){
+          setError("Passwords do not match");
+          return;
+        }
 
         if (!signupInfo.profilePicture.type.startsWith("image/")) {
           setError("Please upload a valid image file");
@@ -63,6 +68,7 @@ const SignUp = () => {
           email: "",
           lastName: "",
           password: "",
+          confirmPassword: "",
           phone: "",
           address: "",
           profilePicture: null
@@ -94,6 +100,10 @@ const SignUp = () => {
               <div>
                 <label>Password</label>
                 <input type="password" placeholder="Password" name="password" onChange={(e)=>{setSignUpInfo({...signupInfo,password:e.target.value})}} value={signupInfo.password}/>
+              </div>
+              <div>
+                <label>Confirm Password</label>
+                <input type="password" placeholder="Password" name="password" onChange={(e)=>{setSignUpInfo({...signupInfo,confirmPassword:e.target.value})}} value={signupInfo.confirmPassword}/>
               </div>
               <div>
                 <label>address</label>

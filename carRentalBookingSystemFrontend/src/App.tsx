@@ -1,6 +1,6 @@
 
 // import Styles from './App.module.css'
-import Home from './components/Home'
+import RenterHome from './components/RenterHome'
 import Login from './components/Login'
 import { Routes,Route } from 'react-router-dom'
 import SignUp from './components/SignUp'
@@ -10,9 +10,9 @@ function App() {
   return (
     <>
     <Routes>
-      <Route path='/' element={state.email==='' ? <Login/> : <Home/> } ></Route>
-      <Route path='/login' element={state.email!=='' ?  <Home/> :<Login/>  } ></Route>
-      <Route path='/signup' element={state.email!=='' ?  <Home/> :<SignUp/>  } ></Route>
+      <Route path='/' element={state.email==='' ? <Login/> : <RenterHome/> } ></Route>
+      <Route path='/login' element={state.email!=='' ?  <RenterHome/> :<Login/>  } ></Route>
+      <Route path='/signup' element={state.email!=='' ?  <RenterHome/> :<SignUp/>  } ></Route>
     </Routes>
      
     </>
