@@ -23,6 +23,7 @@
     transition: transform 0.3s ease-in-out;
     display: flex;
     justify-content: space-around;
+    align-items: center;
   }
   
   .locationCard:hover {
@@ -43,7 +44,17 @@
     border-radius: 8px;
     margin: 10px 0;
   }
-  
+  .deleteicon{
+    cursor: pointer;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    background-color: grey;
+  }
+  .deleteicon:hover{
+    background-color: red;
+    color:green;
+  }
   .locationDetails {
     display: flex;
     align-items: center;

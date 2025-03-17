@@ -2,7 +2,7 @@ const {Location}=require("../models/index")
 require("dotenv").config()
 const validator = require("validator")
 
-const {S3Client,PutObjectCommand, GetObjectCommand }=require("@aws-sdk/client-s3")
+const {S3Client,PutObjectCommand, GetObjectCommand ,DeleteObjectCommand}=require("@aws-sdk/client-s3")
 const {getSignedUrl }=require("@aws-sdk/s3-request-presigner")
 
 const MAX_SIZE = 2 * 1024 * 1024;
@@ -109,4 +109,28 @@ const geAllLocation=async(req,res)=>{
 
 
 
-module.exports={createALocation,geAllLocation}
+const deleteALocation=async(req,res)=>{
+    try{
+       
+        const location=await Location.findByPk(req.params.id);
+        if(!location){
+            return res.status(404).send({message:"Location not found"});
+        }
+        if(location.carRentalId!=req.renter.id){
+            return res.status(403).send({message:"Unauthorized to delete this location"});
+        }
+        const command = new DeleteObjectCommand({
+            Bucket: process.env.AWS_RENTAL_PHOTO_BUCKET_NAME,
+            Key: location.carRentalPhoto,
+          });
+          await s3.send(command);
+        await location.destroy();
+        res.status(200).send({message:"Location deleted successfully"})
+    }
+    catch(err){
+        res.status(500).send({message:"something went wrong with the response"});
+    }
+}
+
+
+module.exports={createALocation,geAllLocation,deleteALocation}

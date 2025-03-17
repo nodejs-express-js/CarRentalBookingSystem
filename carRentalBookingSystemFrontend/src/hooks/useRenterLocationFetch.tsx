@@ -26,8 +26,9 @@ const useRenterLocationFetch = () => {
             })
         })
         const data=await response.json();
-
+        console.log(data)
         if(response.ok){
+          console.log("============="+data.length)
             if(data.length > 0){
             dispatch({type:'ADD_LOCATIONS',payload:data})
             }

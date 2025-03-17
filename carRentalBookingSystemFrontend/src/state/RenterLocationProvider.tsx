@@ -12,8 +12,12 @@ type actionType3={
     type:"INITIALIZE_LOCATIONS";
     payload:CarRentalLocation[]; // Depends on the action type
 }
+type actionType4={
+    type:"DELETE_LOCATION";
+    payload:number; // Depends on the action type
+}
 
-type actionType=actionType1|actionType2|actionType3
+type actionType=actionType1|actionType2|actionType3|actionType4
 
 type childrenType={
     children:ReactNode;
@@ -44,6 +48,9 @@ const renterLocationReducer=(state:CarRentalLocation[],action:actionType)=>{
             return action.payload
         case "ADD_LOCATIONS":
             return [...state,...action.payload]
+        case "DELETE_LOCATION":{
+            return state.filter(location=>location.id!==action.payload);
+        }
         default:
             return state;
     }
