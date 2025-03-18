@@ -5,6 +5,7 @@ const renterMiddleware=require("./MiddleWare/RenterMiddleWare");
 
 const renterRouter=require("./Routers/RenterRoutes")
 const renterHomeRouter=require("./Routers/RenterHomeRoutes")
+const RenterEachLocationCarRouter=require("./Routers/RenterEachLocationCarsRoutes")
 require("dotenv").config()
 app.use(express.json());
 app.use(cors())
@@ -12,7 +13,7 @@ app.use(cors())
 app.use(process.env.ROUTES_PATH_PREFIX+"/renter",renterRouter)
 app.use(process.env.ROUTES_PATH_PREFIX+"/protected",renterMiddleware)
 app.use(process.env.ROUTES_PATH_PREFIX+"/protected/renterhome",renterHomeRouter)
-
+app.use(process.env.ROUTES_PATH_PREFIX+"/protected/rentereachlocationcars",RenterEachLocationCarRouter)
 
 
 

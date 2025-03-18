@@ -18,7 +18,6 @@ const s3 = new S3Client({
 const createALocation=async(req,res)=>{
 try{
 const {name,city,state,country,latitude,longitude}=req.body;
-console.log(req.body)
 if(req.file.size>MAX_SIZE){
     return res.status(400).json({ message: "File size exceeds 2MB limit!" });
 }
