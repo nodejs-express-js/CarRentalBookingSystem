@@ -56,8 +56,7 @@ res.status(200).send({
     carRentalPhoto:url
 })
 }
-catch(err){
-    console.log(err);
+catch{
     res.status(500).send({message:"something went wrong with the response"});
 }
 }
@@ -100,8 +99,7 @@ const geAllLocation=async(req,res)=>{
         }
         res.status(200).send(locations)
     }
-    catch(err){
-        console.log(err);
+    catch{
         res.status(500).send({message:"something went wrong with the response"});
     }
 }
@@ -126,7 +124,7 @@ const deleteALocation=async(req,res)=>{
         await location.destroy();
         res.status(200).send({message:"Location deleted successfully"})
     }
-    catch(err){
+    catch{
         res.status(500).send({message:"something went wrong with the response"});
     }
 }

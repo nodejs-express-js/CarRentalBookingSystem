@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import useRenter from "../hooks/useRenter"
+import useRenter from "../../hooks/useRenter"
 import Styles from './Navbar.module.css'
+import useRenterLocation from "../../hooks/useRenterLocation";
 const Navbar = () => {
     const {state,dispatch}=useRenter();
+    const {dispatch:locationdispatch}=useRenterLocation();
     const navigate=useNavigate();
   return (
     <div className={Styles.container}>
@@ -18,6 +20,7 @@ const Navbar = () => {
             <div onClick={()=>{
                 navigate("/")
                 dispatch({type:"ADD_RENTER",payload:{email:'',token:'',profilePicture:'',}})
+                locationdispatch({type:"DELETE_ALL"})
                 }}>logout</div>
           </div>
         </div>

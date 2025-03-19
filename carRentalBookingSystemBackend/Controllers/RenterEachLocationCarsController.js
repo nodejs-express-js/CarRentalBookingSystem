@@ -10,10 +10,12 @@ const s3 = new S3Client({
       secretAccessKey: process.env.AWS_ACCESS_SECRET_KEY,
     },
 });
+
 const MAX_SIZE = 2 * 1024 * 1024;
 
+
+
 const getLocationCars=async(req,res)=>{
-   
     try{
         const {num1,num2,locationId}=req.body;
         if (num1 == null || num2 == null || num1 === '' || num2 === '') {
@@ -40,13 +42,14 @@ const getLocationCars=async(req,res)=>{
             const url = await getSignedUrl(s3, command, { expiresIn: 3600*24 });
             cars[i].photo=url
         }
-        res.status(200).json(cars);
+        res.status(200).json({ cars: cars,locationId: locationId});
     }
-    catch(err){
-        console.log(err);
+    catch{
         res.status(500).send({message:"something went wrong with the response"});
     }
 }
+
+
 const createLocationCars=async(req,res)=>{
 try{
     if(req.file.size>MAX_SIZE){
@@ -56,9 +59,7 @@ try{
     if(!make || !model || !year || !pricePerDay || !locationId){
         return res.status(400).send({message:"All fields are required"});
     }
-    console.log(locationId)
     const location=await Location.findByPk(locationId);
-    console.log(location)
     if(!location) return res.status(404).send({message:"Location not found"});
     if(location.carRentalId!=req.renter.id){
         return res.status(403).send({message:"Unauthorized to create a car for this location"});
@@ -69,11 +70,8 @@ try{
         Key: uuid+".jpg",
         Body: req.file.buffer
     };
-
     const command = new PutObjectCommand(params);
-
     const response = await s3.send(command);
-
     const CarCreated=await Car.create({
         locationId:locationId,
         photo:uuid+".jpg",
@@ -99,12 +97,31 @@ try{
 catch{
     res.status(500).json({message: 'something went wrong with server input'})
 }
-
-
 }
+
 
 const deleteLocationCars=async(req,res)=>{
-
+try{
+    const cartodelete=await Car.findByPk(req.params.id)
+    if(!cartodelete) return res.status(200).send({message:"Car not found"});
+    const location=await Location.findByPk(cartodelete.locationId);
+    if(!location) return res.status(404).send({message:"Location not found"});
+    if(location.carRentalId!=req.renter.id){
+        return res.status(403).send({message:"Unauthorized to create a car for this location"});
+    }
+    const command = new DeleteObjectCommand({
+        Bucket: process.env.AWS_RENTAL_CAR_BUCKET_NAME,
+        Key: cartodelete.photo,
+      });
+      await s3.send(command);
+      await cartodelete.destroy();
+      res.status(200).json({message:"Car deleted successfully"})
 }
+catch{
+    res.status(500).json({message: 'something went wrong with server input'})
+}
+}
+
+
 
 module.exports={getLocationCars,createLocationCars,deleteLocationCars}

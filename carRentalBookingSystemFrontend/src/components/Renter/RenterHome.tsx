@@ -1,25 +1,26 @@
-import { useEffect, useRef, useState } from "react";
-import useRenterLocation from "../hooks/useRenterLocation"
+import { useEffect, useRef } from "react";
+import useRenterLocation from "../../hooks/useRenterLocation"
 import Navbar from "./Navbar"
-import useRenterLocationFetch from "../hooks/useRenterLocationFetch";
+import useRenterLocationFetch from "../../hooks/useRenterLocationFetch";
 import Styles from './RenterHome.module.css'
 import RenterHomeRight from "./RenterHomeRight";
-import deleteIcon from "../assets/icons8-delete.svg";
-import useDeleteRenterLocation from "../hooks/useDeleteRenterLocation";
+import deleteIcon from "../../assets/icons8-delete.svg";
+import useDeleteRenterLocation from "../../hooks/useDeleteRenterLocation";
+import { useNavigate } from "react-router-dom";
+import useRenterEachLocation from "../../hooks/useRenterEachLocation";
 const RenterHome = () => {
-  const {state}=useRenterLocation();
-  const [currPage,setPageCurr]=useState(0);
+  const {state,dispatch:renterDispatch}=useRenterLocation();
   const {error,loading,fetchFewLocations}=useRenterLocationFetch();
   const {error:deleteerror,loading:deleteloading,deleteloc}=useDeleteRenterLocation();
   const currLast=useRef<null>(null);
   const initialFetchDone = useRef(false);
+  const navigate=useNavigate();
+ const {dispatch}=useRenterEachLocation();
 
   useEffect(()=>{
      const initialObserver=new IntersectionObserver(async(entries)=>{
       if(entries[0].isIntersecting){
-        console.log(currPage,currPage+2)
-           await fetchFewLocations(currPage,currPage+2);
-           setPageCurr(currPage+3)
+           await fetchFewLocations(state.currPage,state.currPage+2);
       }
      },{ threshold: 1})
      const currentLastElement = currLast.current; // Capture the current value
@@ -34,12 +35,11 @@ const RenterHome = () => {
   };
   },[state])
   useEffect(()=>{
-    if (!initialFetchDone.current) {
-      console.log("=================1");
+    if (!initialFetchDone.current && state.locations.length===0) {
       fetchFewLocations(0, 2);
-      setPageCurr(3)
+      renterDispatch({type:"SET_CURR_PAGE",payload:3})
       initialFetchDone.current = true;
-  }
+    }
   },[])
   const deleteLocation=async(id:number)=>{
     if(deleteloading){
@@ -47,12 +47,19 @@ const RenterHome = () => {
     }
     deleteloc(id);
   }
+  
+  const gotoRenterLocation=(id:number)=>{
+    dispatch({type:"SET_CURRENT_LOCATION",payload:""+id})
+    navigate(`/eachlocation/${id}`)
+  }
+
   const showLocations = () => {
-    return state.map((location, index) => (
+    return state.locations.map((location, index) => (
       <div 
         key={index} 
-        ref={index === state.length - 1 ? currLast : null} 
+        ref={index === state.locations.length - 1 ? currLast : null} 
         className={Styles.locationCard}
+        onClick={()=>{gotoRenterLocation(location.id)}}
       >
         <h2 className={Styles.locationName}>{location.name}</h2>
         <img className={Styles.locationImage} src={location.carRentalPhoto} alt={location.name} />

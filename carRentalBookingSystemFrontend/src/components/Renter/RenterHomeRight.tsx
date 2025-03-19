@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Styles from './RenterHomeRight.module.css';
-import useCreateRenterLocation from '../hooks/useCreateRenterLocation';
+import useCreateRenterLocation from '../../hooks/useCreateRenterLocation';
 export interface CarRentalPost {
     name: string;
     city: string;
@@ -59,7 +59,6 @@ const RenterHomeRight = () => {
     }
     // setCarRentalPost({...carRentalPost, latitude: latitude, longitude: longitude})
     createRenterLocationPost({...carRentalPost, latitude: latitude, longitude: longitude})
-    console.log(carRentalPost)
   };
 
   const handleCurrentLocation = () => {

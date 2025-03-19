@@ -6,10 +6,12 @@ const useRenterLocationFetch = () => {
   const [error,setError]=useState("");
   const [loading,setIsLoading]=useState(false);
   const {state:renter}=useRenter();
-  const {dispatch}=useRenterLocation();
+  const {state,dispatch}=useRenterLocation();
 
   const fetchFewLocations=async (num1:number,num2:number)=>{
-          
+          if(state.currPage===-1){
+            return;
+          }
     try{
         setError("")
         setIsLoading(true)
@@ -26,15 +28,16 @@ const useRenterLocationFetch = () => {
             })
         })
         const data=await response.json();
-        console.log(data)
         if(response.ok){
-          console.log("============="+data.length)
             if(data.length > 0){
             dispatch({type:'ADD_LOCATIONS',payload:data})
+            dispatch({type:"SET_CURR_PAGE",payload:state.currPage+3})
+
             }
             else{
                setIsLoading(false) 
                setError("no more locations found")
+               dispatch({type:"SET_CURR_PAGE",payload:-1})
             }
         }
         else{
@@ -43,12 +46,12 @@ const useRenterLocationFetch = () => {
       }
       else{
         setError("You are not logged in")
-        dispatch({type:'INITIALIZE_LOCATIONS',payload:[]})
+        dispatch({type:'INITIALIZE_LOCATIONS',payload:{locations:[],currPage:0}})
       }
     }
     catch{
         setError("something went wrong with the server")
-        dispatch({type:'INITIALIZE_LOCATIONS',payload:[]})
+        dispatch({type:'INITIALIZE_LOCATIONS',payload:{locations:[],currPage:0}})
     }
     setIsLoading(false)
 }
