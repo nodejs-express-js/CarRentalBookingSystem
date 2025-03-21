@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Navbar from "./Navbar"
 import useRenterEachLocationFetch from "../../hooks/useRenterEachLocationFetch"
 import { useParams } from "react-router-dom";
@@ -10,20 +10,28 @@ const RenterEachLocation = () => {
     const carref=useRef<null>(null);
     const {state}=useRenterEachLocation();
     useEffect(()=>{
-        if (state.locationCars.cars.length==0) {
-        if(locationId)
+        const currPage=state.locationCars.filter((car)=>{
+            if(locationId)
+            return car.locationId===parseInt(locationId)
+        })
+        if(locationId && currPage.length==0 )
             fetchEachLocation(parseInt(locationId),0,2)     
-        }
-    },[])
+            
+    },[locationId])
     useEffect(()=>{
         const initialObserver=new IntersectionObserver(async(entries)=>{
-            console.log(entries)
+            console.log("++++++++++++++++++++++++++",state)
             if(entries[0].isIntersecting){
+                const currPage=state.locationCars.filter((car)=>{
+                    if(locationId)
+                    return car.locationId===parseInt(locationId)
+                })
                 if(locationId)
-                await fetchEachLocation(parseInt(locationId),state.locationCars.currPage,state.locationCars.currPage+2)
+                    await fetchEachLocation(parseInt(locationId),currPage[0].currPage,currPage[0].currPage+2)
+                    
             }
         },{
-            threshold: 0.5
+            threshold: 1
         }) 
         const currentLastElement=carref.current
         if(currentLastElement){
@@ -34,21 +42,30 @@ const RenterEachLocation = () => {
                 initialObserver.unobserve(currentLastElement)
             }
         } 
-    },[state.locationCars.cars])
+    },[state])
     
     const showForThisLocation=()=>{
-    
-        return state.locationCars.cars.map((car,index)=>{
-            return <div key={index} 
-                ref={index===state.locationCars.cars.length-1 ? carref : null}
-            >
-                <div>Car brand: {car.make}</div>
-                <div>Car Name: {car.model}</div>
-                <div>Car Photo: <img src={car.photo} alt={car.model} /></div>
-                <div>Car Description: {car.year}</div>
-                <div>Car Price: {car.pricePerDay}</div>
-            </div>
+        const currPage=state.locationCars.filter((car)=>{
+            if(locationId)
+            return car.locationId===parseInt(locationId)
         })
+        
+        if(currPage.length!==0){
+            return currPage[0].cars.map((car,index)=>{
+                return <div key={index} 
+                    ref={index===currPage[0].cars.length-1 ? carref : null}
+                >
+                    <div>Car brand: {car.make}</div>
+                    <div>Car Name: {car.model}</div>
+                    <div>Car Photo: <img src={car.photo} alt={car.model} /></div>
+                    <div>Car Description: {car.year}</div>
+                    <div>Car Price: {car.pricePerDay}</div>
+                </div>
+            })
+        }
+        else{
+            return <></>
+        }
     }
     return (
     <div>

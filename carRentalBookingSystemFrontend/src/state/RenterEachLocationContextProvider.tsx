@@ -43,19 +43,32 @@ const RenterEachLocationReducer=(state:LocationCarsResponse,action:actiontype)=>
     switch(action.type){
         case "SET_CURRENT_LOCATION":
             return {...state, currlocationId:action.payload};
-        case 'ADD_LOCATION_CARS':
-            console.log({...state, locationCars:{
+        case 'ADD_LOCATION_CARS':{
+            
+            const temp=state.locationCars.filter((c)=>{return c.locationId === action.payload.locationId})
+            let add;
+            if(temp[0]){
+                add={
+                    currPage:action.payload.currPage,
+                    locationId:action.payload.locationId,
+                    cars:[...temp[0].cars,...action.payload.cars]
+                }
+            }
+           else{
+            add={
                 currPage:action.payload.currPage,
-                cars:[...state.locationCars.cars,...action.payload.cars],
                 locationId:action.payload.locationId,
-            }})
-            return {...state, locationCars:{
-                currPage:action.payload.currPage,
-                cars:[...state.locationCars.cars,action.payload.cars],
-                locationId:action.payload.locationId,
-            }};
+                cars:action.payload.cars
+            }
+           }
+           console.log(temp,add)
+            return {currlocationId:state.currlocationId, locationCars:[
+                ...state.locationCars.filter((c)=>{return c.locationId !== action.payload.locationId}),
+                add
+            ]};
+            }
         case "DELETE_ALL":
-            return {locationCars:{currPage:0,cars:[],locationId:0},currlocationId:""};
+            return {locationCars:[],currlocationId:""};
         default:
             return state;
     }
@@ -64,11 +77,7 @@ const RenterEachLocationReducer=(state:LocationCarsResponse,action:actiontype)=>
 export const RenterEachLocationContext =createContext<renterEachLocation|null>(null); 
 
 const RenterEachLocationContextProvider = ({children}:childrenType) => {
-  const [state,dispatch]=useReducer(RenterEachLocationReducer,{locationCars:{
-    currPage:0,
-    cars:[],
-    locationId:0,
-  },currlocationId:""});  
+  const [state,dispatch]=useReducer(RenterEachLocationReducer,{locationCars:[],currlocationId:""});  
     return (
     <RenterEachLocationContext.Provider value={{state,dispatch}}>
         {children}

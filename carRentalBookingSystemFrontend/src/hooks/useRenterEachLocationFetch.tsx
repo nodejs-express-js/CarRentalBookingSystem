@@ -5,10 +5,9 @@ import useRenter from "./useRenter";
 const useRenterEachLocationFetch = () => {
   const [loading,setIsLoading]=useState(false);
   const [error,setError]=useState("");
-  const {state,dispatch}=useRenterEachLocation();
+  const {dispatch}=useRenterEachLocation();
   const {state:tempstate}=useRenter();
  const fetchEachLocation=async(locationId:number,num1:number,num2:number)=>{
-    console.log(locationId,num1,num2)
     try{
        setIsLoading(true);
        setError("")
@@ -25,9 +24,10 @@ const useRenterEachLocationFetch = () => {
             })
         })
         const data=await response.json();
-        // console.log(data)
+        console.log("==============",data)
         if(response.ok){
-            dispatch({type:"ADD_LOCATION_CARS",payload:{...data,currPage:state.locationCars.currPage+3}})
+            if(data.cars.length > 0)
+            dispatch({type:"ADD_LOCATION_CARS",payload:{...data,currPage:num2+1}})
         }
     }catch{
        setError("server error is not working");
