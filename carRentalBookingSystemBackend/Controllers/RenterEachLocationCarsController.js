@@ -56,6 +56,7 @@ try{
         return res.status(400).json({ message: "File size exceeds 2MB limit!" });
     }
     const {make,model,year,pricePerDay,locationId}=req.body;
+ 
     if(!make || !model || !year || !pricePerDay || !locationId){
         return res.status(400).send({message:"All fields are required"});
     }
@@ -85,16 +86,11 @@ try{
         Key: uuid+".jpg",
       });
       const url = await getSignedUrl(s3, command2, { expiresIn: 3600*24 });
-      res.status(200).json({
-        photo:url,
-        make:make,
-        model:model,
-        year:year,
-        pricePerDay:pricePerDay,
-        locationId:locationId,
-      })
+      CarCreated.photo=url;
+
+      res.status(200).json(CarCreated)
 }
-catch{
+catch(error){
     res.status(500).json({message: 'something went wrong with server input'})
 }
 }

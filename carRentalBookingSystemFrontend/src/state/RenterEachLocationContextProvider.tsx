@@ -24,6 +24,7 @@ type actiontype1={
     type: 'ADD_LOCATION_CARS';
     payload: LocationCars; 
 }
+
 type actiontype2={
     type: 'SET_CURRENT_LOCATION';
     payload: string; 
@@ -31,6 +32,7 @@ type actiontype2={
 type actiontype3={
     type: 'DELETE_ALL';
 }
+
 type actiontype=actiontype1|actiontype2|actiontype3
 type childrenType={
     children:React.ReactNode
@@ -44,7 +46,6 @@ const RenterEachLocationReducer=(state:LocationCarsResponse,action:actiontype)=>
         case "SET_CURRENT_LOCATION":
             return {...state, currlocationId:action.payload};
         case 'ADD_LOCATION_CARS':{
-            
             const temp=state.locationCars.filter((c)=>{return c.locationId === action.payload.locationId})
             let add;
             if(temp[0]){
@@ -61,12 +62,12 @@ const RenterEachLocationReducer=(state:LocationCarsResponse,action:actiontype)=>
                 cars:action.payload.cars
             }
            }
-           console.log(temp,add)
             return {currlocationId:state.currlocationId, locationCars:[
                 ...state.locationCars.filter((c)=>{return c.locationId !== action.payload.locationId}),
                 add
             ]};
             }
+       
         case "DELETE_ALL":
             return {locationCars:[],currlocationId:""};
         default:

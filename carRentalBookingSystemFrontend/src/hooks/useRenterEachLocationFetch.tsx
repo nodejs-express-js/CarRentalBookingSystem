@@ -24,10 +24,11 @@ const useRenterEachLocationFetch = () => {
             })
         })
         const data=await response.json();
-        console.log("==============",data)
         if(response.ok){
-            if(data.cars.length > 0)
-            dispatch({type:"ADD_LOCATION_CARS",payload:{...data,currPage:num2+1}})
+            if(data.cars.length > 0){
+                dispatch({type:"ADD_LOCATION_CARS",payload:{...data,currPage:num2+1}})
+            }
+            
         }
     }catch{
        setError("server error is not working");
