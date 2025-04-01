@@ -32,8 +32,14 @@ type actiontype2={
 type actiontype3={
     type: 'DELETE_ALL';
 }
-
-type actiontype=actiontype1|actiontype2|actiontype3
+type actiontype4={
+    type: 'DELETE_ONE';
+    payload:{
+        carid: number;
+        locationId: number;
+    }
+}
+type actiontype=actiontype1|actiontype2|actiontype3|actiontype4
 type childrenType={
     children:React.ReactNode
 }
@@ -71,8 +77,6 @@ const RenterEachLocationReducer=(state:LocationCarsResponse,action:actiontype)=>
                 cars:action.payload.cars
             }
            }
-           
-        
            const uniquize= {currlocationId:state.currlocationId, locationCars:[
             ...state.locationCars.filter((c)=>{return c.locationId !== action.payload.locationId}),
             add
@@ -82,7 +86,15 @@ const RenterEachLocationReducer=(state:LocationCarsResponse,action:actiontype)=>
             })
             return uniquize
             }
-            
+        case "DELETE_ONE":
+            {
+            state.locationCars.forEach((location)=>{
+            if(location.locationId===action.payload.locationId){
+                location.cars=location.cars.filter((car)=>car.id!==action.payload.carid)
+            }
+            })
+            return state;
+        }
         case "DELETE_ALL":
             return {locationCars:[],currlocationId:""};
         default:

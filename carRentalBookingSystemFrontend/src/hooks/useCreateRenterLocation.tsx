@@ -34,7 +34,6 @@ const useCreateRenterLocation = () => {
             const data=await response.json();
             if(response.ok){
                setError("post created successfully")
-               console.log(data)
             }
             else{
                 setError(data.message)

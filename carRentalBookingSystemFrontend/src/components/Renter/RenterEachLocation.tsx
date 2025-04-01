@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 import useRenterEachLocation from "../../hooks/useRenterEachLocation";
 import Styles from './RenterEachLocation.module.css';
 import useCreateRenterEachLocation from "../../hooks/useCreateRenterEachLocation";
-
+import deleteIcon from "../../assets/icons8-delete.svg";
+import useDeleteRenterEachLocation from "../../hooks/useDeleteRenterEachLocation";
 type carDetailsType={
     make: string,
     model: string,
@@ -17,23 +18,17 @@ type carDetailsType={
 
 const RenterEachLocation = () => {
     
-    const [carDetails,setCarDetails]=useState<carDetailsType>({
-        make: "",
-        model: "",
-        year: 0,
-        pricePerDay: 0,
-        photo: null,
-        locationId: 0,
-      });
-      const fileInputRef = useRef(null);
-  const  {error:formerror,loading:formloading,createRenterEachLocationPost}=useCreateRenterEachLocation();
-  const [formError,setFormError]=useState("")
-  const { error, loading, fetchEachLocation } = useRenterEachLocationFetch();
-  const { locationId } = useParams();
+  const [carDetails,setCarDetails]=useState<carDetailsType>({make: "",model: "",year: 0,pricePerDay: 0,photo: null,locationId: 0,});
+  const fileInputRef = useRef(null);
   const carref = useRef<null>(null);
-  const { state } = useRenterEachLocation();
   const firstref = useRef(true);
-
+  const  {error:formerror,loading:formloading,createRenterEachLocationPost}=useCreateRenterEachLocation();
+  const { error, loading, fetchEachLocation } = useRenterEachLocationFetch();
+  const {error:deleteerror,loading:deleteloading,deleteEachLocationPost}=useDeleteRenterEachLocation();
+  const { locationId } = useParams();
+  const [formError,setFormError]=useState("")
+  const { state } = useRenterEachLocation();
+  
   useEffect(() => {
     const currPage = state.locationCars.filter((car) => {
       if (locationId) return car.locationId === parseInt(locationId);
@@ -70,38 +65,16 @@ const RenterEachLocation = () => {
     };
   }, [state]);
 
-  const showForThisLocation = () => {
-    const currPage = state.locationCars.filter((car) => {
-      if (locationId) return car.locationId === parseInt(locationId);
-    });
 
-    if (currPage.length !== 0) {
-      return currPage[0].cars.map((car, index) => {
-        return (
-          <div
-            key={index}
-            ref={index === currPage[0].cars.length - 1 ? carref : null}
-            className={Styles.carItem}
-          >
-            <div className={Styles.carBrand}>Car brand: {car.make}</div>
-            <div className={Styles.carModel}>Car Name: {car.model}</div>
-            <div className={Styles.carPhoto}>
-              Car Photo: <img src={car.photo} alt={car.model} />
-            </div>
-            <div className={Styles.carYear}>Car Description: {car.year}</div>
-            <div className={Styles.carPrice}>Car Price: {car.pricePerDay}</div>
-          </div>
-        );
-      });
-    } else {
-      return <></>;
-    }
-  };
 
-    
 
-    const addcar =async()=>{
-        
+
+  const deletecar=async(id:number)=>{
+    if(!deleteloading && locationId)
+      await deleteEachLocationPost(id,parseInt(locationId))
+  }
+
+  const addcar =async()=>{
     if(carDetails.make==="" || carDetails.model==="" || carDetails.year==0 || carDetails.pricePerDay==0 || carDetails.photo===null){
         setFormError("All fields are required");
         return;
@@ -142,14 +115,54 @@ const RenterEachLocation = () => {
     }
 
 
+
+  const showForThisLocation = () => {
+    const currPage = state.locationCars.filter((car) => {
+      if (locationId) return car.locationId === parseInt(locationId);
+    });
+
+    if (currPage.length !== 0) {
+      return currPage[0].cars.map((car, index) => {
+        return (
+          <div
+            key={index}
+            ref={index === currPage[0].cars.length - 1 ? carref : null}
+            className={Styles.carItem}
+          >
+            <div>
+                <div className={Styles.carBrand}>Car brand: {car.make} </div>
+                
+                <div className={Styles.carModel}>Car Name: {car.model}</div>
+                <div className={Styles.carPhoto}>
+                  Car Photo: <img src={car.photo} alt={car.model} />
+                </div>
+                <div className={Styles.carYear}>Car Description: {car.year}</div>
+                <div className={Styles.carPrice}>Car Price: {car.pricePerDay}</div>
+            </div>
+            <img src={deleteIcon} className={Styles.deleteicon} alt="x" onClick={()=>{deletecar(car.id)}} ></img>
+            
+          </div>
+        );
+      });
+    } else {
+      return <></>;
+    }
+  };
+
+    
+
+   
+
   return (
     <div >
       <Navbar />
       <div className={Styles.container}>
       <div className={Styles.left}>
+            <div className={Styles.loading} >{deleteerror}</div>
             <div className={Styles.carGrid}>{showForThisLocation()}</div>
             <div className={Styles.error}>{error}</div>
             <div className={Styles.loading}>{loading && "Loading..."}</div>
+            
       </div>
    <div className={Styles.carFormContainer}>
       

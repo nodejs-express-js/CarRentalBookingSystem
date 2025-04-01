@@ -18,6 +18,9 @@
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    
+    margin-bottom: 10px;
   }
   
   .carBrand,
@@ -87,4 +90,15 @@
 .carFormContainer div { /* for formError */
     color: red;
     margin-top: 10px;
+}
+.deleteicon{
+  cursor: pointer;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  background-color: grey;
+}
+.deleteicon:hover{
+  background-color: red;
+  color:green;
 }

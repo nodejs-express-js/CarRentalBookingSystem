@@ -3,10 +3,15 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 padding: 1rem;
+position: sticky;
+top: 0;
+background-color: white;
+  z-index: 100;
 }
 .home{
     cursor: pointer;
     font-size: 2rem;
+   
 }
 .profilePic{
 width: 4rem;
