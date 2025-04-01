@@ -40,7 +40,16 @@ type childrenType={
 type renterEachLocation={ 
     state: LocationCarsResponse; dispatch: React.ActionDispatch<[action: actiontype]>; 
 }
-
+const uniqueCars = (cars: Car[]): Car[] => {
+    const seen = new Set<number>();
+    return cars.filter(car => {
+        if (seen.has(car.id)) {
+            return false;
+        }
+        seen.add(car.id);
+        return true;
+    });
+};
 const RenterEachLocationReducer=(state:LocationCarsResponse,action:actiontype)=>{
     switch(action.type){
         case "SET_CURRENT_LOCATION":
@@ -62,12 +71,18 @@ const RenterEachLocationReducer=(state:LocationCarsResponse,action:actiontype)=>
                 cars:action.payload.cars
             }
            }
-            return {currlocationId:state.currlocationId, locationCars:[
-                ...state.locationCars.filter((c)=>{return c.locationId !== action.payload.locationId}),
-                add
-            ]};
+           
+        
+           const uniquize= {currlocationId:state.currlocationId, locationCars:[
+            ...state.locationCars.filter((c)=>{return c.locationId !== action.payload.locationId}),
+            add
+            ]}
+            uniquize.locationCars.forEach((location)=>{
+                location.cars=uniqueCars(location.cars)
+            })
+            return uniquize
             }
-       
+            
         case "DELETE_ALL":
             return {locationCars:[],currlocationId:""};
         default:

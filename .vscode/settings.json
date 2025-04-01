@@ -1,1 +1,6 @@
-{}
+{
+    "files.associations": {
+        ".fantomasignore": "ignore",
+        "functional": "c"
+    }
+}

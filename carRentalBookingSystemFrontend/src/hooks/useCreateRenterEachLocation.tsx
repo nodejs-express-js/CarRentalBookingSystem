@@ -18,7 +18,6 @@ const useCreateRenterEachLocation = () => {
   const {dispatch}=useRenterEachLocation();
 
   const createRenterEachLocationPost=async(post:carDetailsType,num1:number)=>{
-    console.log(post)
     try{
         setError("")
         setIsLoading(true)
@@ -43,16 +42,10 @@ const useCreateRenterEachLocation = () => {
         })
         const data=await response.json();
         if(response.ok){
-            
             dispatch({type:"ADD_LOCATION_CARS",payload:{cars:[data],currPage:num1,locationId:post.locationId}})
-            
-        }
-        if(response.ok){
-            console.log(data);
         }
     }
-    catch(error){
-        console.log(error)
+    catch{
         setError('something went wrong');
     }
     setIsLoading(false);

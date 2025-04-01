@@ -110,10 +110,19 @@ const RenterEachLocation = () => {
         const currPage = state.locationCars.filter((car) => {
             if (locationId) return car.locationId === parseInt(locationId);
           })
-        await createRenterEachLocationPost({
-            ...carDetails,
-            locationId: parseInt(locationId),
-          },currPage[0].currPage);
+          
+          if(currPage[0]){
+            await createRenterEachLocationPost({
+              ...carDetails,
+              locationId: parseInt(locationId),
+            },currPage[0].currPage);
+          }
+          else{
+            await createRenterEachLocationPost({
+              ...carDetails,
+              locationId: parseInt(locationId),
+            },3);
+          }
     }
     else{
         setFormError("Location not found");
