@@ -116,7 +116,7 @@ const RenterHomeRight = () => {
 
   return (
     <div className={Styles.minicontainer2}>
-      <h3>Your Current Location</h3>
+      <h3>Add a Location</h3>
 
       {!isLocationAvailable && <p>Loading your location...</p>}
       <div>
