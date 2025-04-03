@@ -21,7 +21,6 @@ const renterReducer=(state:renterStateType,action:actionType)=>{
         case 'ADD_RENTER':
             localStorage.setItem('renter',JSON.stringify(action.payload))
             return action.payload;
-        
         default:
             return state;
     }

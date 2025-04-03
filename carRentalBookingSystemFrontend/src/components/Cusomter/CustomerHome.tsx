@@ -1,7 +1,11 @@
+import Navbar from "./Navbar"
 
 const CustomerHome = () => {
   return (
-    <div>CustomerHome</div>
+    <div>
+        <Navbar></Navbar>
+        customer home
+    </div>
   )
 }
 
