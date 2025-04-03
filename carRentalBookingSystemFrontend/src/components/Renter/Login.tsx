@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Navbar from "./Navbar"
-import useRenterLogin from "../../hooks/useRenterLogin";
+import useRenterLogin from "../../hooks/renter/useRenterLogin";
 
 const Login = () => {
     const [loginInfo,setLoginInfo] = useState({email:'',password:''});

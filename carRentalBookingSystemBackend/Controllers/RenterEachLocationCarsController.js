@@ -52,11 +52,13 @@ const getLocationCars=async(req,res)=>{
 
 const createLocationCars=async(req,res)=>{
 try{
+    const {make,model,year,pricePerDay,locationId}=req.body;
     if(req.file.size>MAX_SIZE){
         return res.status(400).json({ message: "File size exceeds 2MB limit!" });
     }
-    const {make,model,year,pricePerDay,locationId}=req.body;
- 
+    if(req.file.mimetype!=="image/jpeg"){
+        return res.status(400).json({ message: "Invalid file type. Only jpeg is supported!" });
+    }
     if(!make || !model || !year || !pricePerDay || !locationId){
         return res.status(400).send({message:"All fields are required"});
     }
@@ -90,7 +92,7 @@ try{
 
       res.status(200).json(CarCreated)
 }
-catch(error){
+catch{
     res.status(500).json({message: 'something went wrong with server input'})
 }
 }

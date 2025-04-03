@@ -30,6 +30,10 @@ const useRenterEachLocationFetch = () => {
             }
             
         }
+        else{
+            const data=await response.json()
+            setError(data.message)
+        }
     }catch{
        setError("server error is not working");
     }

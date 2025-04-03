@@ -44,6 +44,9 @@ const useCreateRenterEachLocation = () => {
         if(response.ok){
             dispatch({type:"ADD_LOCATION_CARS",payload:{cars:[data],currPage:num1,locationId:post.locationId}})
         }
+        else{
+            setError(data.message)
+        }
     }
     catch{
         setError('something went wrong');

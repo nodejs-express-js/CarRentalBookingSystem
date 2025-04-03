@@ -24,7 +24,7 @@ const useRenterLogin = () => {
                 type:"ADD_RENTER",
                 payload:data
             })
-            navigate("/")
+            navigate("/renter")
         }
         else{
             setError(data.message);

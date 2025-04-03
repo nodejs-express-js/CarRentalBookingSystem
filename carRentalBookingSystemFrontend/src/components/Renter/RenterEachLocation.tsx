@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "./Navbar";
-import useRenterEachLocationFetch from "../../hooks/useRenterEachLocationFetch";
+import useRenterEachLocationFetch from "../../hooks/renter/useRenterEachLocationFetch";
 import { useParams } from "react-router-dom";
-import useRenterEachLocation from "../../hooks/useRenterEachLocation";
+import useRenterEachLocation from "../../hooks/renter/useRenterEachLocation";
 import Styles from './RenterEachLocation.module.css';
-import useCreateRenterEachLocation from "../../hooks/useCreateRenterEachLocation";
+import useCreateRenterEachLocation from "../../hooks/renter/useCreateRenterEachLocation";
 import deleteIcon from "../../assets/icons8-delete.svg";
-import useDeleteRenterEachLocation from "../../hooks/useDeleteRenterEachLocation";
+import useDeleteRenterEachLocation from "../../hooks/renter/useDeleteRenterEachLocation";
 type carDetailsType={
     make: string,
     model: string,
@@ -19,7 +19,7 @@ type carDetailsType={
 const RenterEachLocation = () => {
     
   const [carDetails,setCarDetails]=useState<carDetailsType>({make: "",model: "",year: 0,pricePerDay: 0,photo: null,locationId: 0,});
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement|null>(null);
   const carref = useRef<null>(null);
   const firstref = useRef(true);
   const  {error:formerror,loading:formloading,createRenterEachLocationPost}=useCreateRenterEachLocation();
@@ -102,7 +102,7 @@ const RenterEachLocation = () => {
         return;
     }
     if (fileInputRef.current) {
-        fileInputRef.current.value = null;
+        fileInputRef.current.value = "";
     }
     setCarDetails({
         make: "",

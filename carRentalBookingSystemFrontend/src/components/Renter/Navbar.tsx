@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import useRenter from "../../hooks/useRenter"
+import useRenter from "../../hooks/renter/useRenter"
 import Styles from './Navbar.module.css'
-import useRenterLocation from "../../hooks/useRenterLocation";
-import useRenterEachLocation from "../../hooks/useRenterEachLocation";
+import useRenterLocation from "../../hooks/renter/useRenterLocation";
+import useRenterEachLocation from "../../hooks/renter/useRenterEachLocation";
 const Navbar = () => {
     const {state,dispatch}=useRenter();
     const {dispatch:locationdispatch}=useRenterLocation();
@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <div className={Styles.container}>
 
-        <div onClick={()=>{navigate("/")}} className={Styles.home}>CarRental</div>
+        <div onClick={()=>{navigate("/renter")}} className={Styles.home}>Car Rental Admin</div>
         {state.token!==''
         
          ? 
@@ -20,7 +20,7 @@ const Navbar = () => {
           <div>
             <div>Welcome {state.email}</div> 
             <div onClick={()=>{
-                navigate("/")
+                navigate("/renter")
                 dispatch({type:"ADD_RENTER",payload:{email:'',token:'',profilePicture:'',}})
                 locationdispatch({type:"DELETE_ALL"})
                 eachlocationdispatch({type:"DELETE_ALL"})

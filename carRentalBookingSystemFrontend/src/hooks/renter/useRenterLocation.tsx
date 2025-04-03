@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import {RenterLocationContext} from '../state/RenterLocationProvider'
+import {RenterLocationContext} from '../../state/RenterLocationProvider'
 const useRenterLocation = () => {
  const context=useContext(RenterLocationContext);
  if(!context){

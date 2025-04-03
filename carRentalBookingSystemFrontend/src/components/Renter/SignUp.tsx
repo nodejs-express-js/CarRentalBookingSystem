@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import Navbar from './Navbar'
-import useRenterSignUp from '../../hooks/useRenterSignUp'
+import useRenterSignUp from '../../hooks/renter/useRenterSignUp'
 
 type signUpInfo={
   firstName: string,

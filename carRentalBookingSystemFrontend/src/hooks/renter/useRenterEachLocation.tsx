@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { RenterEachLocationContext } from "../state/RenterEachLocationContextProvider"
+import { RenterEachLocationContext } from "../../state/RenterEachLocationContextProvider"
 
 
 const useRenterEachLocation = () => {

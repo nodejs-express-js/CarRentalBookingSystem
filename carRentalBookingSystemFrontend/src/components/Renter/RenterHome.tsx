@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
-import useRenterLocation from "../../hooks/useRenterLocation"
+import useRenterLocation from "../../hooks/renter/useRenterLocation"
 import Navbar from "./Navbar"
-import useRenterLocationFetch from "../../hooks/useRenterLocationFetch";
+import useRenterLocationFetch from "../../hooks/renter/useRenterLocationFetch";
 import Styles from './RenterHome.module.css'
 import RenterHomeRight from "./RenterHomeRight";
 import deleteIcon from "../../assets/icons8-delete.svg";
-import useDeleteRenterLocation from "../../hooks/useDeleteRenterLocation";
+import useDeleteRenterLocation from "../../hooks/renter/useDeleteRenterLocation";
 import { useNavigate } from "react-router-dom";
-import useRenterEachLocation from "../../hooks/useRenterEachLocation";
+import useRenterEachLocation from "../../hooks/renter/useRenterEachLocation";
 const RenterHome = () => {
   const {state,dispatch:renterDispatch}=useRenterLocation();
   const {error,loading,fetchFewLocations}=useRenterLocationFetch();

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {CarRentalPost} from '../components/Renter/RenterHomeRight';
+import {CarRentalPost} from '../../components/Renter/RenterHomeRight';
 import useRenter from "./useRenter";
 
 const useCreateRenterLocation = () => {
