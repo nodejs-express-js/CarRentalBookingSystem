@@ -30,6 +30,8 @@ const RenterHomeRight = () => {
   const {error,loading,createRenterLocationPost}=useCreateRenterLocation();
   // Get the user's current location when the component is mounted
   useEffect(() => {
+    
+ 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -185,7 +187,7 @@ const RenterHomeRight = () => {
 
       <button onClick={handleCurrentLocation}>Use Current Location</button>
 
-      <LoadScript googleMapsApiKey="AIzaSyBORBUrw1JVEKP7-RAb3Tkzdf3bNCDLnOw">
+      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           center={center} // Centering map dynamically based on `center` state
