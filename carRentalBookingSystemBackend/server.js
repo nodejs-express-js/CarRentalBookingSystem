@@ -2,13 +2,13 @@ const express=require("express");
 const app = express();
 const cors=require("cors");
 const renterMiddleware=require("./MiddleWare/RenterMiddleWare");
-
+const customerMiddleware=require("./MiddleWare/CustomerMiddleWare");
 const renterRouter=require("./Routers/RenterRoutes")
 const renterHomeRouter=require("./Routers/RenterHomeRoutes")
 const RenterEachLocationCarRouter=require("./Routers/RenterEachLocationCarsRoutes")
 
 const customerRouter=require("./Routers/CustomerRoutes")
-
+const customerHomeRoutes=require("./Routers/CustomerHomeRoutes")
 
 require("dotenv").config()
 app.use(express.json());
@@ -22,6 +22,8 @@ app.use(process.env.ROUTES_PATH_PREFIX+"/protected/rentereachlocationcars",Rente
 // app.use(process.env.ROUTES_PATH_PREFIX+"/customerprotected",)
 
 app.use(process.env.ROUTES_PATH_PREFIX+"/customer",customerRouter)
+app.use(process.env.ROUTES_PATH_PREFIX+"/protectedcustomer",customerMiddleware)
+app.use(process.env.ROUTES_PATH_PREFIX+"/protectedcustomer/customerhome",customerHomeRoutes)
 
 app.listen(process.env.PORT||8080, ()=>{
     console.log("Server is running on port",process.env.PORT||8080);

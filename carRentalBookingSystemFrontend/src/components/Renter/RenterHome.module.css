@@ -22,10 +22,14 @@
     text-align: center;
     transition: transform 0.3s ease-in-out;
     display: flex;
+    align-items: center;;
+  }
+  .locCard{
+    width: 80%;
+    display: flex;
     justify-content: space-around;
     align-items: center;
   }
-  
   .locationCard:hover {
     transform: translateY(-5px);
   }

@@ -75,6 +75,7 @@ const RenterEachLocation = () => {
   }
 
   const addcar =async()=>{
+    setFormError("")
     if(carDetails.make==="" || carDetails.model==="" || carDetails.year==0 || carDetails.pricePerDay==0 || carDetails.photo===null){
         setFormError("All fields are required");
         return;

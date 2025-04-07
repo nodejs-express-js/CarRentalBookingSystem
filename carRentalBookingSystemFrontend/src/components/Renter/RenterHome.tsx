@@ -59,8 +59,9 @@ const RenterHome = () => {
         key={index} 
         ref={index === state.locations.length - 1 ? currLast : null} 
         className={Styles.locationCard}
-        onClick={()=>{gotoRenterLocation(location.id)}}
+        
       >
+        <div onClick={()=>{gotoRenterLocation(location.id)}} className={Styles.locCard}>
         <h2 className={Styles.locationName}>{location.name}</h2>
         <img className={Styles.locationImage} src={location.carRentalPhoto} alt={location.name} />
         <div className={Styles.locationDetails}>
@@ -70,6 +71,7 @@ const RenterHome = () => {
             <div><strong>Country:</strong> {location.country}</div>
            
           </div>
+        </div>
         </div>
         <img src={deleteIcon} alt="delete icon" className={Styles.deleteicon} onClick={()=>{deleteLocation(location.id)}} ></img>
       </div>
