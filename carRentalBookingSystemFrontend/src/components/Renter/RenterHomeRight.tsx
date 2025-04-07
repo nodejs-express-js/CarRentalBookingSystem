@@ -30,8 +30,6 @@ const RenterHomeRight = () => {
   const {error,loading,createRenterLocationPost}=useCreateRenterLocation();
   // Get the user's current location when the component is mounted
   useEffect(() => {
-    
- 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
