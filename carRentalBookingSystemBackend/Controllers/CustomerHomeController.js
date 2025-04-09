@@ -1,4 +1,4 @@
-const {Location}=require("../models/index")
+const {Location,Car}=require("../models/index")
 const { Sequelize, DataTypes, Op } = require('sequelize');
 
 const {S3Client,PutObjectCommand,GetObjectCommand}=require("@aws-sdk/client-s3")
@@ -54,9 +54,44 @@ try{
 
     res.status(200).json({results})
 }
-catch(err){
-    console.log(err);
+catch{
     res.status(500).send({message:"Error retrieving locations"});
 }
 }
-module.exports={getCustomerLocations}
+
+
+const getLocationCars=async(req,res)=>{
+try{
+  const {num1,num2,locationId}=req.body;
+  if (num1 == null || num2 == null || num1 === '' || num2 === '') {
+    return res.status(400).send({ message: "All fields are required" });
+  }
+  if( parseInt(num1)>parseInt(num2)){
+      return res.status(400).send({message:"Invalid range"});
+  }
+  const range=parseInt(num2)-parseInt(num1);
+  const cars=await Car.findAll({
+    where:{
+      locationId:locationId
+    },
+    limit: range + 1,
+    offset: parseInt(num1),
+    order: [["id", "ASC"]]
+  })
+  for(let i=0;i<cars.length;i++){
+    const command = new GetObjectCommand({
+        Bucket: process.env.AWS_RENTAL_CAR_BUCKET_NAME,
+        Key: cars[i].photo,
+    });
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600*24 });
+    cars[i].photo=url
+}
+res.status(200).json({ cars: cars,locationId: locationId});
+}
+catch{
+res.status(500).json({message:"something went wrong with server"})
+}
+}
+
+
+module.exports={getCustomerLocations,getLocationCars}
