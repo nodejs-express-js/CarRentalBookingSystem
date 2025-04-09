@@ -34,7 +34,7 @@ try{
           ],
         ],
         order: Sequelize.literal('distancesquared ASC'),
-        limit: 5,
+        limit: 3,
         raw: true, 
       });
   

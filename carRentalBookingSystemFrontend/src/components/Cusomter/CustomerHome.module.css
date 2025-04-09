@@ -1,0 +1,59 @@
+.container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+  }
+  
+  .loading {
+    padding: 20px;
+    font-style: italic;
+    color: #777;
+  }
+  
+  .title {
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+  
+  .details {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  
+  .photoContainer {
+    flex-shrink: 0;
+    width: 200px;
+    height: auto;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  
+  .photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .info {
+    flex-grow: 1;
+  }
+  
+  .infoItem {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px;
+  }
