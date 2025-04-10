@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import { useState, useEffect } from 'react';
 import useCustomerFetchHomeLocations from '../../hooks/customer/useCustomerFetchHomeLocations';
 import styles from './CustomerHome.module.css'; // Import the CSS module
+import { useNavigate } from 'react-router-dom';
 
 interface CarRentalLocation {
   id: number;
@@ -25,7 +26,7 @@ const CustomerHome = () => {
   // const [longitude, setLongitude] = useState(0);
   const {error,loading,RefreshHomeLocations}=useCustomerFetchHomeLocations();
   const [nearbyLocations,setNearbyLocations]=useState<CarRentalLocation[]>([]);
-
+  const navigate=useNavigate();
   useEffect(()=>{
     const update=async()=>{
       if(!loading){
@@ -42,7 +43,9 @@ const CustomerHome = () => {
       }
 
       return (
-        <div className={styles.container} key={location.id}>
+        <div className={styles.container} key={location.id} onClick={()=>{
+          navigate(`/customereachlocation/${location.id}`)
+        }}>
           <h2 className={styles.title}>{location.name} Details</h2>
           <div className={styles.details}>
             <div className={styles.photoContainer}>

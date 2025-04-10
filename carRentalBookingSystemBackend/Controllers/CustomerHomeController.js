@@ -86,7 +86,7 @@ try{
     const url = await getSignedUrl(s3, command, { expiresIn: 3600*24 });
     cars[i].photo=url
 }
-res.status(200).json({ cars: cars,locationId: locationId});
+res.status(200).json({ cars: cars});
 }
 catch{
 res.status(500).json({message:"something went wrong with server"})

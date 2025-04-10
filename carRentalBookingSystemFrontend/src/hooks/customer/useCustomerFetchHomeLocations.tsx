@@ -22,7 +22,6 @@ const useCustomerFetchHomeLocations = () => {
     const RefreshHomeLocations=async(latitude:number,longitude:number)=>{
         setError("")
         setIsLoading(true)
-        console.log(latitude,longitude)
         try{    
             const response=await fetch(import.meta.env.VITE_BACKEND_URL+"protectedcustomer/customerhome/fetchlocations",{
                 method:"POST",

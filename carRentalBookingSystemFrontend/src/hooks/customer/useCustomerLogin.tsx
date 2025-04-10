@@ -21,7 +21,7 @@ const useCustomerLogin = () => {
         })
         const data=await response.json()
         if(response.ok){
-            console.log(data)
+            
             dispatch({type:"ADD_CUSTOMER",payload:data})
         }
         else{
