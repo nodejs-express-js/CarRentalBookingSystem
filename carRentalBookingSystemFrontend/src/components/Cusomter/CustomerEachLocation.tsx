@@ -14,12 +14,15 @@ export const CustomerEachLocation = () => {
     useEffect(()=>{
         const initialUpdate=async()=>{
           if(locationId)
-          setCars(await fetchfewcars(0,2,parseInt(locationId)));
+          {
+            setCars(await fetchfewcars(0,2,parseInt(locationId)));
+          }
         }
         initialUpdate()
     },[])
 
     useEffect(()=>{
+    
       const initalobserver=new IntersectionObserver(async(entries)=>{
         if(entries[0].isIntersecting){
           if(locationId && !reachedEnd){

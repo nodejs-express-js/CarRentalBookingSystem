@@ -37,7 +37,13 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+    await queryInterface.addConstraint('Bookings', {
+      fields: ['bookingDate', 'carId'],
+      type: 'unique',
+      name: 'unique_booking_date_car_id' // Optional, but recommended: give the constraint a name
+    });
   },
+  
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Bookings');
   }
