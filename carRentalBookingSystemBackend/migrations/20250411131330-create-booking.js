@@ -10,10 +10,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       bookingDate: {
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATEONLY,
+        allowNull: false,
       },
       carId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Cars',
           key: 'id'
@@ -22,11 +24,28 @@ module.exports = {
       },
       customerId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Customers',
           key: 'id'
         },
         onDelete: 'CASCADE'
+      },
+      cardType: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      cardNumber: {
+        type: Sequelize.STRING(16),
+        allowNull: false,
+      },
+      cardCVV: {
+        type: Sequelize.STRING(3),
+        allowNull: false,
+      },
+      cardHolderName: {
+        type: Sequelize.STRING(32),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

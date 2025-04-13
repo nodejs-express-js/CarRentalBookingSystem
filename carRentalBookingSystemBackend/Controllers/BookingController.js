@@ -14,7 +14,11 @@ const s3 = new S3Client({
 
 const createABooking=async(req,res)=>{
 try{
-    const {date,carId}=req.body;
+    const {date,carId,cardType,cardNumber,cardCVV,cardHolderName}=req.body;
+    if(!date || !carId || !cardType || !cardNumber || !cardCVV || !cardHolderName){
+        res.status(400).json({message:"all fields are required date,carId,cardType,cardNumber,cardCVV,cardHolderName"})
+        return;
+    }
     const currdate=new Date(date)
     const car=await Car.findOne({
         where:{
@@ -25,11 +29,18 @@ try{
         res.status(400).json({message:"car does not exist"})
         return;
     }
+   
     const booking=await Booking.create({
+        cardType:cardType,
+        cardNumber:cardNumber,
+        cardCVV:cardCVV,
+        cardHolderName:cardHolderName,
         bookingDate: currdate,
         carId: car.dataValues.id,
-        customerId: req.customer.id
-      })
+        customerId: req.customer.id,
+    })
+    
+      
     const url = await getSignedUrl(s3, new GetObjectCommand({Bucket: process.env.AWS_RENTAL_CAR_BUCKET_NAME, Key: car.photo}));
     car.photo=url;
     res.status(200).json({booking,car})
@@ -40,7 +51,9 @@ catch(err){
         return;
     }
     catch{
-        res.status(500).json({message:"something went wrong with server"})
+        // console.log(err)
+        // res.status(500).json({message:"something went wrong with server"})
+        res.status(500).json({err})
         return;
     }
 }

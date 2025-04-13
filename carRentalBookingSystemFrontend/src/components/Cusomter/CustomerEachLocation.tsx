@@ -1,7 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar"
 import useCustomerFetchEachLocationCars,{Car} from "../../hooks/customer/useCustomerFetchEachLocationCars";
 import { useEffect, useRef, useState } from "react";
+import styles from './CustomerEachLocation.module.css';
+
+
 
 export const CustomerEachLocation = () => {
   const { locationId } = useParams();
@@ -10,6 +13,7 @@ export const CustomerEachLocation = () => {
     const [currPage,setCurrPage]=useState(3);
     const [reachedEnd,setReachedEnd]=useState(false);
     const ref=useRef<HTMLDivElement>(null);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         const initialUpdate=async()=>{
@@ -22,7 +26,6 @@ export const CustomerEachLocation = () => {
     },[])
 
     useEffect(()=>{
-    
       const initalobserver=new IntersectionObserver(async(entries)=>{
         if(entries[0].isIntersecting){
           if(locationId && !reachedEnd){
@@ -34,7 +37,6 @@ export const CustomerEachLocation = () => {
               setCars(cars=>{return [...cars,...resp]});
               setCurrPage(currPage=>currPage+3)
             }
-            
           }
         }
       },{
@@ -52,54 +54,46 @@ export const CustomerEachLocation = () => {
         };
     },[cars])
 
+    const handleBooking=(car:Car)=>{
+      navigate('/customerbooking', { state: { car } });
 
-
-    const showcars=()=>{
-      return cars.map((car,index)=>{
-        if(index==cars.length-1){
-          return   (
-            <div ref={ref} key={index}>
-             
-              {
-                <div key={car.id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-                  <img src={car.photo} alt={`${car.make} ${car.model}`} style={{ maxWidth: '200px', height: 'auto' }} />
-                  <p><strong>Make:</strong> {car.make}</p>
-                  <p><strong>Model:</strong> {car.model}</p>
-                  <p><strong>Year:</strong> {car.year}</p>
-                  <p><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
-                  <p><strong>Location ID:</strong> {car.locationId}</p>
-                  <p><strong>Created At:</strong> {new Date(car.createdAt).toLocaleDateString()} {new Date(car.createdAt).toLocaleTimeString()}</p>
-                  <p><strong>Updated At:</strong> {new Date(car.updatedAt).toLocaleDateString()} {new Date(car.updatedAt).toLocaleTimeString()}</p>
-                </div>
-              }
-            </div>)
-        }
-        else{
-          return   (
-            <div key={index}>
-              {
-                <div key={car.id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-                  <img src={car.photo} alt={`${car.make} ${car.model}`} style={{ maxWidth: '200px', height: 'auto' }} />
-                  <p><strong>Make:</strong> {car.make}</p>
-                  <p><strong>Model:</strong> {car.model}</p>
-                  <p><strong>Year:</strong> {car.year}</p>
-                  <p><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
-                  <p><strong>Location ID:</strong> {car.locationId}</p>
-                  <p><strong>Created At:</strong> {new Date(car.createdAt).toLocaleDateString()} {new Date(car.createdAt).toLocaleTimeString()}</p>
-                  <p><strong>Updated At:</strong> {new Date(car.updatedAt).toLocaleDateString()} {new Date(car.updatedAt).toLocaleTimeString()}</p>
-                </div>
-              }
-            </div>)
-        }
-      })
     }
+
+
+    const showcars = () => {
+      return (
+        <div className={styles.container}>
+          {cars.map((car, index) => {
+            const card = (
+              <div key={car.id} className={styles.card}>
+                <img src={car.photo} alt={`${car.make} ${car.model}`} />
+                <p><strong>Make:</strong> {car.make}</p>
+                <p><strong>Model:</strong> {car.model}</p>
+                <p><strong>Year:</strong> {car.year}</p>
+                <p><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
+              </div>
+            );
+    
+            if (index === cars.length - 1) {
+              return (
+                <div ref={ref} key={index} onClick={()=>{handleBooking(car)}}>
+                  {card}
+                </div>
+              );
+            } else {
+              return <div key={index} onClick={()=>{handleBooking(car)}}>{card}</div>;
+            }
+          })}
+        </div>
+      );
+    };
+    
 
 
   
   return (
     <div>
         <Navbar></Navbar>
-        id: {locationId}
         <div>{loading}</div>
         <div>{error}</div>
         <h2>Available Cars</h2>

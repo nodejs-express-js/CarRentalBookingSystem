@@ -18,7 +18,31 @@ module.exports = (sequelize, DataTypes) => {
   Booking.init({
     bookingDate: DataTypes.DATEONLY,
     carId: DataTypes.INTEGER,
-    customerId: DataTypes.INTEGER
+    customerId: DataTypes.INTEGER,
+
+
+    cardType: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    cardNumber: {
+      type: DataTypes.STRING(16),
+      allowNull: false
+    },
+    cardCVV: {
+      type: DataTypes.STRING(3),
+      allowNull: false
+    },
+    cardHolderName: {
+      type: DataTypes.STRING(32),
+      allowNull: false
+    },
+
+
+
+
+
+
   }, {
     sequelize,
     modelName: 'Booking',
