@@ -1,7 +1,7 @@
 const express=require("express")
 const BookingRoutes=express.Router()
-const {createABooking}=require("../Controllers/BookingController")
+const {createABooking,getAllBookings}=require("../Controllers/BookingController")
 BookingRoutes.post("/createabooking",createABooking)
-
+BookingRoutes.post("/getallbookings",getAllBookings)
 
 module.exports=BookingRoutes

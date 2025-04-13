@@ -24,14 +24,18 @@ const CustomerBooking = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
   
+    if ((name === 'cardNumber' || name === 'cardCVV') && !/^\d*$/.test(value)) {
+      return;
+    }
+  
     if (name === 'cardNumber' && value.length > 16) return;
     if (name === 'cardCVV' && value.length > 3) return;
   
     setBooking({ ...booking, [name]: value });
   };
-  
 
-  const bookCar = async () => {
+  const bookCar = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     if( !booking.date || !booking.cardType || !booking.cardNumber || !booking.cardCVV){
       alert("Please fill all fields")
       return
@@ -50,45 +54,43 @@ const CustomerBooking = () => {
         <p><strong>Year:</strong> {car.year}</p>
         <p><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
     </div>
-    <div>
-      <label>Booking Date</label>
-      <input type='date' name='date' value={booking.date} onChange={handleChange} />
+    <form onSubmit={bookCar}>
+        <label>Booking Date</label>
+        <input type='date' name='date' value={booking.date} onChange={handleChange} />
 
-      <label>Card Type</label>
-<select name="cardType" value={booking.cardType} onChange={handleChange}>
-  <option value="">-- Select Card Type --</option>
-  <option value="Visa">Visa</option>
-  <option value="MasterCard">MasterCard</option>
-  <option value="Amex">Amex</option>
-</select>
+        <label>Card Type</label>  
+        <select name="cardType" value={booking.cardType} onChange={handleChange}>
+          <option value="">-- Select Card Type --</option>
+          <option value="Visa">Visa</option>
+          <option value="MasterCard">MasterCard</option>
+          <option value="Amex">Amex</option>
+        </select>
+          <label>Card Number</label>
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="\d*"
+            maxLength={16}
+            name="cardNumber"
+            value={booking.cardNumber}
+            onChange={handleChange}
+          />
 
-      <label>Card Number</label>
-      <input
-        type="text"
-        inputMode="numeric"
-        pattern="[0-9]*"
-        maxLength={16}
-        name="cardNumber"
-        value={booking.cardNumber}
-        onChange={handleChange}
-      />
-
-      <label>CVV</label>
-      <input
-        type="text"
-        inputMode="numeric"
-        pattern="[0-9]*"
-        maxLength={3}
-        name="cardCVV"
-        value={booking.cardCVV}
-        onChange={handleChange}
-      />
-
-      <label>Card Holder Name</label>
-      <input type='text' name='cardHolderName' value={booking.cardHolderName} onChange={handleChange} />
-      <div>{error}</div>
-      <button onClick={bookCar} disabled={loading}>Book Car</button>
-    </div>
+          <label>CVV</label>
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="\d*"
+            maxLength={3}
+            name="cardCVV"
+            value={booking.cardCVV}
+            onChange={handleChange}
+          />
+          <label>Card Holder Name</label>
+          <input type='text' name='cardHolderName' value={booking.cardHolderName} onChange={handleChange} />
+          <div>{error}</div>
+          <input type='submit'  disabled={loading}/>
+    </form>
 
     </>
   )

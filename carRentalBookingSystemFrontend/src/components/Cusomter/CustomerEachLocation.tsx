@@ -56,7 +56,6 @@ export const CustomerEachLocation = () => {
 
     const handleBooking=(car:Car)=>{
       navigate('/customerbooking', { state: { car } });
-
     }
 
 
