@@ -13,19 +13,20 @@ const Navbar = () => {
         {state.token!==''
          ? 
          <div className={Styles.wrapper}>
-          <div className={Styles.order} onClick={()=>{ navigate("/customerorders") }}>Orders</div>
           <div className={Styles.minicontainer1}>
               <img src={state.profilePicture} alt="profile pic" className={Styles.profilePic}></img>
               <div>
-                <div>Welcome {state.email}</div> 
-                <div onClick={()=>{navigate("/");dispatch({type:"ADD_CUSTOMER",payload:{email:'',token:'',profilePicture:'',}})}}>logout</div>
+                <div className={Styles.email}>Welcome {state.email}</div> 
+                <div className={Styles.order} onClick={()=>{ navigate("/customerorders") }}>Orders</div>
+                <div className={Styles.logout} onClick={()=>{navigate("/");dispatch({type:"ADD_CUSTOMER",payload:{email:'',token:'',profilePicture:'',}})}}>logout</div>
               </div>
+              
             </div>
           </div>
          :
         <div className={Styles.minicontainer2}>
-            <div onClick={()=>{navigate("/customerlogin")}}>Login</div>
-            <div onClick={()=>{navigate("/customersignup")}}>Signup</div>
+            <div className={Styles.login} onClick={()=>{navigate("/customerlogin")}}>Login</div>
+            <div className={Styles.signup} onClick={()=>{navigate("/customersignup")}}>Signup</div>
         </div>
      }
     </div>

@@ -27,7 +27,6 @@ const useCustomerSignup = () => {
             })
             const data=await response.json()
             if(response.ok){
-                
                 dispatch({type:"ADD_CUSTOMER",payload:data})
             } else{
                 setError(data.message)

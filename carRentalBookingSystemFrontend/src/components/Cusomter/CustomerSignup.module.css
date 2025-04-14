@@ -1,0 +1,81 @@
+/* CustomerSignup.module.css */
+.container {
+
+  
+  }
+  
+  .signupForm {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    margin: 3rem auto;
+    padding: 3rem;
+    border-radius: 0.3rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--fourth-color);
+  }
+  
+  .inputGroup {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--fourth-color);
+  }
+  
+  .inputField,
+  .fileInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .inputField:focus,
+  .fileInput:focus {
+    outline: none;
+    border-color: var(--third-color);
+    box-shadow: 0 0 5px rgba(var(--third-color-rgb), 0.5);
+  }
+  
+  .errorMessage {
+    color: #dc3545;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .submitButton {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    background-color: var(--third-color);
+    border: 1px solid var(--third-color);
+    color: var(--fourth-color);
+  }
+  
+  .submitButton:hover {
+    border: 1px solid var(--fourth-color);
+    background-color: var(--primary-color);
+    color:var(--fourth-color);
+    border-radius: 0.3rem;
+  }
+  
+  .submitButton:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+  }

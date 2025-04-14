@@ -1,0 +1,83 @@
+/* CustomerLogin.module.css */
+.container {
+
+ 
+  }
+  .minicontainer{
+    width: 25rem;
+    margin: 3rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--primary-color); /* Using the primary color for background */
+    color: var(--secondary-color); /* Using the secondary color for text */
+    padding: 3rem;
+    border-radius: 0.3rem;
+  }
+  .header {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    
+  }
+  
+  .input {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .input label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--secondary-color);
+  }
+  
+  .input input[type="text"],
+  .input input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+
+  }
+  
+  .input input[type="text"]:focus,
+  .input input[type="password"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .error {
+    color: #dc3545; /* Standard error color */
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .submit {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    background-color: var(--third-color);
+    border: 1px solid var(--third-color);
+    color: var(--fourth-color);
+  }
+  
+  .submit:hover {
+    border: 1px solid var(--fourth-color);
+    background-color: var(--primary-color);
+    color:var(--fourth-color);
+    border-radius: 0.3rem;
+  }
+  
+  .submit:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+  }
