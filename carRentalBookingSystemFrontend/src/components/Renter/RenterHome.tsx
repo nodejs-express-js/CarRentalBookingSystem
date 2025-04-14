@@ -82,6 +82,7 @@ const RenterHome = () => {
     <Navbar />
     <div className={Styles.container}>
       <div className={Styles.minicontainer1}>
+        <h1 className={Styles.location}>Locations</h1>
         <div>{deleteerror}</div>
           {showLocations()}
           {loading && <div className={Styles.loading}>Loading...</div>}

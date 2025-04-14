@@ -1,7 +1,7 @@
 /* RenterEachLocation.module.css */
 .container {
   display: flex;
-  padding: 20px;
+  padding: 20px 0.3rem;
   gap: 30px; /* Spacing between the car list and the form */
   align-items: flex-start; /* Align items to the top in the container */
 }

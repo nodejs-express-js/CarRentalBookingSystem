@@ -1,57 +1,78 @@
+/* CustomerOrders.module.css */
 .container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
+
+ 
+
+}
+
+.minicontainer {
+
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--second-color);
+  font-size: 2rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 10px;
+  color: var(--fourth-color);
+}
+
+.error {
+  color: #dc3545;
+  text-align: center;
+  padding: 10px;
+}
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.orderContainer {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  width: 60%;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.minicontainer1{
   
-  .title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .orders {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .orderContainer {
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .orderItem {
-    margin-bottom: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline; /* Align items vertically */
-    gap: 8px; /* Add some gap between label and value */
-  }
-  
-  .label {
-    font-weight: bold;
-    color: #555;
-    margin-right: 5px; /* Add space between label and value */
-  }
-  
-  .carPhoto {
-    width: 100%; /* Make the image responsive */
-    max-width: 300px; /* Limit the maximum width */
-    height: auto;
-    border-radius: 4px;
-    margin-top: 10px;
-  }
-  
-  .loading {
-    text-align: center;
-    margin-top: 20px;
-    color: #777;
-  }
-  
-  .error{
-      color: red;
-      text-align: center;
-  }
+}
+.minicontainer2{
+
+}
+.orderItem {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.label {
+  font-weight: bold;
+  color: var(--secondary-color-light);
+  min-width: 120px; /* Adjust as needed for alignment */
+}
+
+.carPhoto {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}

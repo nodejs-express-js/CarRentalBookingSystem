@@ -12,7 +12,9 @@
   flex-direction: column;
   gap: 15px; /* Spacing between location cards */
 }
-
+.location{
+ 
+}
 .locationCard {
   background-color: var(--primary-color);
   color: var(--secondary-color);

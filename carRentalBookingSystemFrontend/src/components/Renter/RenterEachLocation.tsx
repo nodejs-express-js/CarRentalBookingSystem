@@ -159,6 +159,7 @@ const RenterEachLocation = () => {
       <Navbar />
       <div className={Styles.container}>
       <div className={Styles.left}>
+        <h1>Cars available</h1>
             <div className={Styles.loading} >{deleteerror}</div>
             <div className={Styles.carGrid}>{showForThisLocation()}</div>
             <div className={Styles.error}>{error}</div>

@@ -51,70 +51,81 @@ const CustomerOrders = () => {
           key={index}
           className={Styles.orderContainer} // Apply a CSS class for styling
         >
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Booking Date:</span>
-            {order.bookingDate}
+          <div className={Styles.minicontainer1}>
+
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Booking Date:</span>
+                  {order.bookingDate}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Card Type:</span>
+                  {order.cardType}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Card Number:</span>
+                  {order.cardNumber}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Card Holder:</span>
+                  {order.cardHolderName}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Car Make:</span>
+                  {order.car.make}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Car Model:</span>
+                  {order.car.model}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Car Year:</span>
+                  {order.car.year}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Price/Day:</span>
+                  {order.car.pricePerDay}
+                </div>
+
           </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Card Type:</span>
-            {order.cardType}
+
+          <div className={Styles.minicontainer2}>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Location Name:</span>
+                  {order.car.location.name}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Location City:</span>
+                  {order.car.location.city}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Location State:</span>
+                  {order.car.location.state}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Location Country:</span>
+                  {order.car.location.country}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Latitude:</span>
+                  {order.car.location.latitude}
+                </div>
+                <div className={Styles.orderItem}>
+                  <span className={Styles.label}>Longitude:</span>
+                  {order.car.location.longitude}
+                </div>
           </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Card Number:</span>
-            {order.cardNumber}
+
+          <div className={Styles.minicontainer3}>
+              <div className={Styles.orderItem}>
+                 
+                  <img
+                    src={order.car.photo}
+                    alt={`${order.car.make} ${order.car.model}`}
+                    className={Styles.carPhoto} 
+                  />
+                </div>
           </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Card Holder:</span>
-            {order.cardHolderName}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Car Make:</span>
-            {order.car.make}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Car Model:</span>
-            {order.car.model}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Car Year:</span>
-            {order.car.year}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Price/Day:</span>
-            {order.car.pricePerDay}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Car Photo:</span>
-            <img
-              src={order.car.photo}
-              alt={`${order.car.make} ${order.car.model}`}
-              className={Styles.carPhoto} // Apply a CSS class for styling
-            />
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Location Name:</span>
-            {order.car.location.name}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Location City:</span>
-            {order.car.location.city}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Location State:</span>
-            {order.car.location.state}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Location Country:</span>
-            {order.car.location.country}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Latitude:</span>
-            {order.car.location.latitude}
-          </div>
-          <div className={Styles.orderItem}>
-            <span className={Styles.label}>Longitude:</span>
-            {order.car.location.longitude}
-          </div>
+          
         </div>
       );
     });
@@ -123,11 +134,14 @@ const CustomerOrders = () => {
   return (
     <div className={Styles.container}>
       <Navbar />
-      <h1 className={Styles.title}>Customer Orders</h1>
-      <div className={Styles.loading}>{loading && "Loading..."}</div> {/* Display loading message */}
-      <div className={Styles.error}>{error}</div> {/* Display error message */}
-      <div className={Styles.orders}>{showOrders()}</div>
-      {reached ? <>reached end</> : <></>}
+      <div className={Styles.minicontainer}>
+        <h1 className={Styles.title}> Orders</h1>
+        {loading && <div className={Styles.loading}>"Loading..."</div> }
+        {error ?  <div className={Styles.error}>{error}</div> : <></>}
+        <div className={Styles.orders}>{showOrders()}</div>
+        {reached ? <>reached end</> : <></>}
+      </div>
+      
     </div>
   );
 };
