@@ -86,7 +86,7 @@ try{
       ],
       limit: range + 1,
       offset: parseInt(num1),
-      order: [["id", "ASC"]]
+      order: [["createdAt", "DESC"]]
       })
       for(let i=0;i<bookings.length;i++){
         const url = await getSignedUrl(s3, new GetObjectCommand({Bucket: process.env.AWS_RENTAL_CAR_BUCKET_NAME, Key: bookings[i].car.photo}))

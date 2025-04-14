@@ -13,6 +13,16 @@ background-color: white;
     font-size: 2rem;
    
 }
+.wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.order{
+    margin: 0rem 2rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
 .profilePic{
 width: 4rem;
 height: 4rem;

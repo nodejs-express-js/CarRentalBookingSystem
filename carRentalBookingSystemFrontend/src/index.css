@@ -1,0 +1,12 @@
+:root{
+    --primary-color: #007bff;
+    --secondary-color: white;
+    --third-color: #333;
+    --fourth-color: #f8f9fa;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+*{
+    margin: 0;
+    padding: 0;
+}

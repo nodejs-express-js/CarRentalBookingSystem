@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import Styles from './RenterHomeRight.module.css';
+import Styles from './RenterHomeRight.module.css'; // Import the CSS module
 import useCreateRenterLocation from '../../hooks/renter/useCreateRenterLocation';
+
 export interface CarRentalPost {
-    name: string;
-    city: string;
-    state: string;
-    country: string;
-    latitude: number;
-    longitude: number;
-    carRentalPhoto: File|null;
-  }
+  name: string;
+  city: string;
+  state: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+  carRentalPhoto: File | null;
+}
+
 const RenterHomeRight = () => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -18,16 +20,16 @@ const RenterHomeRight = () => {
   const [isLocationAvailable, setIsLocationAvailable] = useState(false);
 
   const [center, setCenter] = useState({ lat: 0, lng: 0 }); // Initial center set to (0, 0)
-  const [carRentalPost,setCarRentalPost] = useState<CarRentalPost>({
+  const [carRentalPost, setCarRentalPost] = useState<CarRentalPost>({
     name: '',
     city: '',
     state: '',
     country: '',
     latitude: 0,
     longitude: 0,
-    carRentalPhoto: null
-  })
-  const {error,loading,createRenterLocationPost}=useCreateRenterLocation();
+    carRentalPhoto: null,
+  });
+  const { error, loading, createRenterLocationPost } = useCreateRenterLocation();
   // Get the user's current location when the component is mounted
   useEffect(() => {
     if (navigator.geolocation) {
@@ -49,16 +51,16 @@ const RenterHomeRight = () => {
     }
   }, []);
 
-  const handleLatitudeChange = (e:React.ChangeEvent<HTMLInputElement>) => setLatitude(parseFloat(e.target.value));
-  const handleLongitudeChange = (e:React.ChangeEvent<HTMLInputElement>) => setLongitude(parseFloat(e.target.value));
+  const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => setLatitude(parseFloat(e.target.value));
+  const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => setLongitude(parseFloat(e.target.value));
 
   const handleSubmit = () => {
-    if(carRentalPost.name=="" || carRentalPost.city=="" || carRentalPost.state=="" || carRentalPost.country=="" || carRentalPost.carRentalPhoto==null){
-        alert("Please fill all the fields")
-        return;
+    if (carRentalPost.name == "" || carRentalPost.city == "" || carRentalPost.state == "" || carRentalPost.country == "" || carRentalPost.carRentalPhoto == null) {
+      alert("Please fill all the fields")
+      return;
     }
     // setCarRentalPost({...carRentalPost, latitude: latitude, longitude: longitude})
-    createRenterLocationPost({...carRentalPost, latitude: latitude, longitude: longitude})
+    createRenterLocationPost({ ...carRentalPost, latitude: latitude, longitude: longitude })
   };
 
   const handleCurrentLocation = () => {
@@ -80,24 +82,24 @@ const RenterHomeRight = () => {
     }
   };
 
-  const handleMarkerDragEnd = (event:google.maps.MapMouseEvent) => {
-    let newLat:number=0,newLng:number = 0;
-    if(event.latLng)
-        newLat= event.latLng.lat();
-    if(event.latLng)
-        newLng= event.latLng.lng();
-    
+  const handleMarkerDragEnd = (event: google.maps.MapMouseEvent) => {
+    let newLat: number = 0, newLng: number = 0;
+    if (event.latLng)
+      newLat = event.latLng.lat();
+    if (event.latLng)
+      newLng = event.latLng.lng();
+
     setMarkerPosition({ lat: newLat, lng: newLng });
     setLatitude(newLat);
     setLongitude(newLng);
   };
 
-  const handleMapClick = (event:google.maps.MapMouseEvent) => {
-    let lat:number=0,lng:number=0;
-    if(event.latLng)
-        lat = event.latLng.lat();
-    if(event.latLng)
-        lng = event.latLng.lng();
+  const handleMapClick = (event: google.maps.MapMouseEvent) => {
+    let lat: number = 0, lng: number = 0;
+    if (event.latLng)
+      lat = event.latLng.lat();
+    if (event.latLng)
+      lng = event.latLng.lng();
     setMarkerPosition({ lat, lng });
     setCenter({ lat, lng });
     setLatitude(lat);
@@ -118,41 +120,42 @@ const RenterHomeRight = () => {
     <div className={Styles.minicontainer2}>
       <h3>Add a Location</h3>
 
-      {!isLocationAvailable && <p>Loading your location...</p>}
-      <div>
-            <label>Name: </label>
-            <input
-              type="text"
-              placeholder="Name"
-              value={carRentalPost.name}
-              onChange={(e) => setCarRentalPost({...carRentalPost, name: e.target.value })}/>
+      {!isLocationAvailable && <p className={Styles.loading}>Loading your location...</p>}
+      <div className={Styles.formGroup}>
+        <label>Name: </label>
+        <input
+          type="text"
+          placeholder="Name"
+          value={carRentalPost.name}
+          onChange={(e) => setCarRentalPost({ ...carRentalPost, name: e.target.value })}
+        />
       </div>
-      <div>
+      <div className={Styles.formGroup}>
         <label>City: </label>
         <input
           type="text"
           placeholder="City"
           value={carRentalPost.city}
-          onChange={(e) => setCarRentalPost({...carRentalPost, city: e.target.value })}/>
+          onChange={(e) => setCarRentalPost({ ...carRentalPost, city: e.target.value })} />
       </div>
-      <div>
+      <div className={Styles.formGroup}>
         <label>State: </label>
         <input
           type="text"
           placeholder="State"
           value={carRentalPost.state}
-          onChange={(e) => setCarRentalPost({...carRentalPost, state: e.target.value })}/>
+          onChange={(e) => setCarRentalPost({ ...carRentalPost, state: e.target.value })} />
       </div>
-      <div>
+      <div className={Styles.formGroup}>
         <label>Country: </label>
         <input
           type="text"
           placeholder="Country"
           value={carRentalPost.country}
-          onChange={(e) => setCarRentalPost({...carRentalPost, country: e.target.value })}/>
+          onChange={(e) => setCarRentalPost({ ...carRentalPost, country: e.target.value })} />
       </div>
-      <div>
-      <label>Latitude: </label>
+      <div className={Styles.formGroup}>
+        <label>Latitude: </label>
         <input
           type="number"
           placeholder="Latitude"
@@ -160,7 +163,7 @@ const RenterHomeRight = () => {
           onChange={handleLatitudeChange}
         />
       </div>
-      <div>
+      <div className={Styles.formGroup}>
         <label>Longitude: </label>
         <input
           type="number"
@@ -169,39 +172,42 @@ const RenterHomeRight = () => {
           onChange={handleLongitudeChange}
         />
       </div>
-      <div>
+      <div className={Styles.formGroup}>
         <label>car rental photo</label>
         <input
           type="file"
           accept="image/*"
-          onChange={(e) =>{ 
-            if(e.target.files)
-            setCarRentalPost({...carRentalPost, carRentalPhoto: e.target.files[0] })
-        }}
+          className={Styles.fileInput}
+          onChange={(e) => {
+            if (e.target.files)
+              setCarRentalPost({ ...carRentalPost, carRentalPhoto: e.target.files[0] })
+          }}
         />
       </div>
-      {error ? <div>{error}</div> : <></>}
-      <button onClick={handleSubmit} disabled={loading}>Submit</button>
+      {error && <div className={Styles.error}>{error}</div>}
+      <button onClick={handleSubmit} disabled={loading} className={Styles.submitButton}>Submit</button>
 
-      <button onClick={handleCurrentLocation}>Use Current Location</button>
+      <button onClick={handleCurrentLocation} className={Styles.currentLocationButton}>Use Current Location</button>
 
-      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={center} // Centering map dynamically based on `center` state
-          zoom={16} // Zoom level
-          options={mapOptions}
-          onClick={handleMapClick} // Handle click event to place marker
-        >
-          {markerPosition && (
-            <Marker
-              position={markerPosition}
-              draggable={true} // Make marker draggable
-              onDragEnd={handleMarkerDragEnd} // Update position when marker is dragged
-            />
-          )}
-        </GoogleMap>
-      </LoadScript>
+      <div className={Styles.mapContainer}>
+        <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={center} // Centering map dynamically based on `center` state
+            zoom={16} // Zoom level
+            options={mapOptions}
+            onClick={handleMapClick} // Handle click event to place marker
+          >
+            {markerPosition && (
+              <Marker
+                position={markerPosition}
+                draggable={true} // Make marker draggable
+                onDragEnd={handleMarkerDragEnd} // Update position when marker is dragged
+              />
+            )}
+          </GoogleMap>
+        </LoadScript>
+      </div>
     </div>
   );
 };

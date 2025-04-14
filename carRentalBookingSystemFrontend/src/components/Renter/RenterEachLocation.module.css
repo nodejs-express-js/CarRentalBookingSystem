@@ -1,104 +1,166 @@
 /* RenterEachLocation.module.css */
 .container {
-    display: flex;
-    min-height: 100vh;
-  }
-  .left{
-    width: 80%;
-  }
-  .carGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .carItem {
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    
-    margin-bottom: 10px;
-  }
-  
-  .carBrand,
-  .carModel,
-  .carYear,
-  .carPrice {
-    margin-bottom: 10px;
-  }
-  
-  .carPhoto img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin-top: 10px;
-  }
-  
-  .error,
-  .loading {
-    text-align: center;
-    padding: 10px;
-    color: red;
-  }
-  /* AddCarForm.module.css or similar */
+  display: flex;
+  padding: 20px;
+  gap: 30px; /* Spacing between the car list and the form */
+  align-items: flex-start; /* Align items to the top in the container */
+}
 
-.carFormContainer {
+.left {
+  flex: 2; /* Takes up more space for the car grid */
   display: flex;
   flex-direction: column;
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
+  gap: 20px;
+}
+
+.carGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 15px;
+}
+
+.carItem {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  position: relative; /* For positioning the delete icon */
+}
+
+.carItem:hover {
+  background-color: var(--third-color);
+  color: var(--fourth-color);
+}
+
+.carBrand,
+.carModel,
+.carYear,
+.carPrice {
+  margin-bottom: 8px;
+}
+
+.carPhoto {
+  margin-bottom: 8px;
+}
+
+.carPhoto img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.deleteicon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease-in-out;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.deleteicon:hover {
+  opacity: 1;
+}
+
+.loading {
+  text-align: center;
+  padding: 10px;
+  color: var(--secondary-color);
+}
+
+.error {
+  color: #dc3545;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Styling for the car form using existing variables */
+.carFormContainer {
+  flex: 1; /* Takes up less space for the form */
+  background-color: var(--primary-color); /* Using primary color for form background */
+  padding: 25px; /* Slightly more padding */
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* More spacing between form elements */
 }
 
 .carFormContainer label {
-  margin-top: 10px;
-  font-weight: bold;
+  font-weight: 500; /* Slightly lighter bold */
+  margin-bottom: 8px;
+  color: var(--secondary-color); /* Using secondary color for labels */
+  font-size: 1em;
 }
 
 .carFormContainer input[type="text"],
-.carFormContainer input[type="number"],
+.carFormContainer input[type="number"] {
+  padding: 12px; /* Increased padding */
+  border: 1px solid #ccc; /* Using a standard gray for input border */
+  border-radius: 6px; /* More rounded input fields */
+  margin-bottom: 15px; /* Increased margin */
+  font-size: 1rem;
+  color: var(--secondary-color); /* Using secondary color for input text */
+  background-color: white; /* Using white for input background */
+}
+
 .carFormContainer input[type="file"] {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  padding: 10px;
   border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  background-color: white;
+  color: var(--secondary-color);
+}
+
+.carFormContainer input[type="file"]::-webkit-file-upload-button {
+  background-color: var(--third-color);
+  border: 1px solid var(--third-color);
+  color: var(--fourth-color);
+  border: none;
+  padding: 10px 15px;
   border-radius: 4px;
-  box-sizing: border-box; /* Important for padding/border to be included in width */
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.carFormContainer input[type="file"]::-webkit-file-upload-button:hover {
+  border: 1px solid var(--fourth-color);
+  background-color: var(--primary-color);
+  color: var(--fourth-color); 
 }
 
 .carFormContainer button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
+  background-color: var(--third-color);
+  border: 1px solid var(--third-color);
+  color: var(--fourth-color);
+  padding: 14px 22px; /* Increased padding */
   border: none;
-  border-radius: 4px;
+  border-radius: 8px; /* More rounded button */
   cursor: pointer;
-  margin-top: 15px;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
 }
 
 .carFormContainer button:hover {
-  background-color: #0056b3;
+  border: 1px solid var(--fourth-color);
+  background-color: var(--primary-color);
+  color: var(--fourth-color); 
 }
 
-.carFormContainer div { /* for formError */
-    color: red;
-    margin-top: 10px;
+.carFormContainer button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
 }
-.deleteicon{
-  cursor: pointer;
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  background-color: grey;
-}
-.deleteicon:hover{
-  background-color: red;
-  color:green;
+
+.carFormContainer > div {
+  color: #dc3545; /* Error message color */
+  font-size: 0.9em;
+  margin-top: 5px;
 }

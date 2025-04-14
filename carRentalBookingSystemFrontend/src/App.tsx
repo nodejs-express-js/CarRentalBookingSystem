@@ -13,6 +13,7 @@ import CustomerSignup from './components/Cusomter/CustomerSignup';
 import { CustomerEachLocation } from './components/Cusomter/CustomerEachLocation';
 import CustomerBooking from './components/Cusomter/CustomerBooking';
 import CustomerSuccess from './components/Cusomter/CustomerSuccess';
+import CustomerOrders from './components/Cusomter/CustomerOrders';
 
 function App() {
   const {state}=useRenter();
@@ -26,6 +27,9 @@ function App() {
       <Route path='/customereachlocation/:locationId' element={customerstate.email==='' ? <CustomerLogin/>  :<CustomerEachLocation/>}></Route>
       <Route path='/customerbooking' element={customerstate.email==='' ? <CustomerLogin/>  :<CustomerBooking />}></Route>
       <Route path='/customersuccess' element={customerstate.email==='' ? <CustomerLogin/>  :<CustomerSuccess />}></Route>
+      <Route path='/customerorders' element={customerstate.email==='' ? <CustomerLogin/>  :<CustomerOrders />}></Route>
+
+
 
       <Route path='/renter' element={state.email==='' ? <Login/> : <RenterHome/> } ></Route>
       <Route path='/eachlocation/:locationId' element={state.email==='' ?  <Login/> :<RenterEachLocation/>}></Route>

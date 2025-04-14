@@ -19,7 +19,7 @@ const Navbar = () => {
           <img src={state.profilePicture} alt="profile pic" className={Styles.profilePic}></img>
           <div>
             <div>Welcome {state.email}</div> 
-            <div onClick={()=>{
+            <div className={Styles.logout} onClick={()=>{
                 navigate("/renter")
                 dispatch({type:"ADD_RENTER",payload:{email:'',token:'',profilePicture:'',}})
                 locationdispatch({type:"DELETE_ALL"})
