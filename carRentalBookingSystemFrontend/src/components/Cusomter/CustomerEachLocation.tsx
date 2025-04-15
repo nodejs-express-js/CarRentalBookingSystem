@@ -31,10 +31,16 @@ export const CustomerEachLocation = () => {
           if(locationId && !reachedEnd){
             const resp=await fetchfewcars(currPage,currPage+2,parseInt(locationId));
             if(resp.length==0){
-                setReachedEnd(true)
+              setReachedEnd(true)
             }
             else{
-              setCars(cars=>{return [...cars,...resp]});
+              setCars((prevCars) => {
+                // Ensure uniqueness based on car.id
+                const newCars = resp.filter(
+                  (newCar) => !prevCars.some((car) => car.id === newCar.id)
+                );
+                return [...prevCars, ...newCars];
+              });
               setCurrPage(currPage=>currPage+3)
             }
           }
@@ -65,22 +71,22 @@ export const CustomerEachLocation = () => {
           {cars.map((car, index) => {
             const card = (
               <div key={car.id} className={styles.card}>
-                <img src={car.photo} alt={`${car.make} ${car.model}`} />
-                <p><strong>Make:</strong> {car.make}</p>
-                <p><strong>Model:</strong> {car.model}</p>
-                <p><strong>Year:</strong> {car.year}</p>
-                <p><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
+                <img src={car.photo} alt={`${car.make} ${car.model}`} className={styles.photo}/>
+                <p className={styles.infoItem}><strong>Make:</strong> {car.make}</p>
+                <p className={styles.infoItem}><strong>Model:</strong> {car.model}</p>
+                <p className={styles.infoItem}><strong>Year:</strong> {car.year}</p>
+                <p className={styles.infoItem}><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
               </div>
             );
     
             if (index === cars.length - 1) {
               return (
-                <div ref={ref} key={index} onClick={()=>{handleBooking(car)}}>
+                <div ref={ref} key={index} onClick={()=>{handleBooking(car)}} className={styles.minicontainer}>
                   {card}
                 </div>
               );
             } else {
-              return <div key={index} onClick={()=>{handleBooking(car)}}>{card}</div>;
+              return <div key={index} onClick={()=>{handleBooking(car)}} className={styles.minicontainer}>{card}</div>;
             }
           })}
         </div>
@@ -93,11 +99,11 @@ export const CustomerEachLocation = () => {
   return (
     <div>
         <Navbar></Navbar>
-        <div>{loading}</div>
-        <div>{error}</div>
-        <h2>Available Cars</h2>
+        <div className={styles.loading}>{loading}</div>
+        <div className={styles.error}>{error}</div>
+        <h2 className={styles.heading}>Available Cars</h2>
         <>{showcars()}</>
-        <>{reachedEnd ? "have reached end" : ""}</>
+        <>{reachedEnd ? <div className={styles.loading}>have reached end</div> : ""}</>
     </div>
   )
 }

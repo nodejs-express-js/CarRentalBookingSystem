@@ -43,51 +43,53 @@ const CustomerHome = () => {
       }
 
       return (
-        <div className={styles.container} key={location.id} onClick={()=>{
+        <div className={styles.miniminicontainer} key={location.id} onClick={()=>{
           navigate(`/customereachlocation/${location.id}`)
         }}>
-          <h2 className={styles.title}>{location.name} Details</h2>
-          <div className={styles.details}>
-            <div className={styles.photoContainer}>
+          <h2 className={styles.title}>{location.name} </h2>       
               <img
                 src={location.carRentalPhoto}
                 alt={`${location.name} in ${location.city}`}
                 className={styles.photo}
               />
-            </div>
             <div className={styles.info}>
+              <div>
+                  <div className={styles.infoItem}>
+                    <strong className={styles.label}>Name:</strong> {location.name}
+                  </div>
+                  <div className={styles.infoItem}>
+                    <strong className={styles.label}>City:</strong> {location.city}
+                  </div>
+                  <div className={styles.infoItem}>
+                    <strong className={styles.label}>State:</strong> {location.state}
+                  </div>
+                  <div className={styles.infoItem}>
+                    <strong className={styles.label}>Country:</strong> {location.country}
+                  </div>
+              </div>
+             
+              
 
-              <div className={styles.infoItem}>
-                <strong className={styles.label}>Name:</strong> {location.name}
-              </div>
-              <div className={styles.infoItem}>
-                <strong className={styles.label}>City:</strong> {location.city}
-              </div>
-              <div className={styles.infoItem}>
-                <strong className={styles.label}>State:</strong> {location.state}
-              </div>
-              <div className={styles.infoItem}>
-                <strong className={styles.label}>Country:</strong> {location.country}
-              </div>
-              <div className={styles.infoItem}>
-                <strong className={styles.label}>Latitude:</strong> {location.latitude}
-              </div>
-              <div className={styles.infoItem}>
-                <strong className={styles.label}>Longitude:</strong> {location.longitude}
-              </div>
-
-              <div className={styles.infoItem}>
-                <strong className={styles.label}>Distance:</strong>{' '}
-                {location.distance.toFixed(2)}
-              </div>
+              <div >
+                <div className={styles.infoItem}>
+                      <strong className={styles.label}>Latitude:</strong> {location.latitude}
+                    </div>
+                    <div className={styles.infoItem}>
+                      <strong className={styles.label}>Longitude:</strong> {location.longitude}
+                    </div>
+                    <div className={styles.infoItem}>
+                      <strong className={styles.label}>Distance:</strong>{' '}
+                      {location.distance.toFixed(2)}
+                </div>
             </div>
           </div>
+         
         </div>
       );
     })
   }
   const mapContainerStyle = {
-    width: '35vw',
+    width: '30vw',
     height: '45vh',
   };
 
@@ -154,30 +156,38 @@ const CustomerHome = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={markerPosition || center} // Center on marker or default
-          zoom={16}
-          options={mapOptions}
-          onClick={handleMapClick}
-        >
-          {markerPosition && (
-            <Marker
-              position={markerPosition}
-              draggable={true}
-              onDragEnd={handleMarkerDragEnd}
-            />
-          )}
-        </GoogleMap>
-      </LoadScript>
-      <div>
-        <button onClick={getCurrentLocation}>Current GPS Location</button>
-        <p>Marker Position: {markerPosition ? `Lat: ${markerPosition.lat}, Lng: ${markerPosition.lng}` : "No Marker Placed"}</p>
-        <div>{error}</div>
-        <h1>Closest Car Rentals to you</h1>
-        <>{showLocations()}</>
+      <div  className={styles.container}>
+              <div className={styles.minicontainer1}>
+                
+                  <div className={styles.error}>{error}</div>
+                  <h1 className={styles.header}>Closest Car Rentals to you</h1>
+                  <>{showLocations()}</>
+              </div>
+              <div className={styles.minicontainer2}>
+                <h2 className={styles.header1}>Find Near By car Rentals setting your GPS</h2>
+                    <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
+                      <GoogleMap
+                        mapContainerStyle={mapContainerStyle}
+                        center={markerPosition || center} // Center on marker or default
+                        zoom={16}
+                        options={mapOptions}
+                        onClick={handleMapClick}
+                      >
+                        {markerPosition && (
+                          <Marker
+                            position={markerPosition}
+                            draggable={true}
+                            onDragEnd={handleMarkerDragEnd}
+                          />
+                        )}
+                      </GoogleMap>
+                    </LoadScript>
+                    <button onClick={getCurrentLocation} className={styles.gpsbutton}>Current GPS Location</button>
+                    <p className={styles.latlong}>{markerPosition ? `Lat: ${markerPosition.lat}, Lng: ${markerPosition.lng}` : "No Marker Placed"}</p>
+              </div>
       </div>
+     
+
     </div>
   );
 };

@@ -1,7 +1,100 @@
-.container{
-
+/* CustomerBooking.module.css */
+.outercontainer{
+    display: flex;
 }
-
-.container img{
-    width: 25rem;
-}
+.container {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    margin: 3rem auto;
+    max-width: 600px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+  }
+  
+  .carImage {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+  
+  .carDetail {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  
+  .carDetail strong {
+    font-weight: bold;
+    color: var(--fourth-color-light);
+    margin-right: 5px;
+  }
+  
+  .bookingForm {
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+    color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--secondary-color-light);
+  }
+  
+  .input,
+  .select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--third-color);
+    background-color: #f9f9f9;
+  }
+  
+  .input:focus,
+  .select:focus {
+    outline: none;
+    border-color: var(--third-color);
+    box-shadow: 0 0 5px rgba(var(--third-color-rgb), 0.5);
+  }
+  
+  .error {
+    color: #dc3545;
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  .submitButton {
+    background-color: var(--third-color);
+    color: var(--fourth-color);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submitButton:hover {
+    background-color: var(--third-color-darker);
+  }
+  
+  .submitButton:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+  }
+  

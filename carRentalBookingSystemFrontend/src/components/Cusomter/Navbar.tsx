@@ -1,15 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import Styles from './Navbar.module.css'
 import { useCustomer } from "../../hooks/customer/useCustomer";
-
+import logo from '../../assets/logo.png'
 const Navbar = () => {
     const {state,dispatch}=useCustomer();
    
     const navigate=useNavigate();
   return (
     <div className={Styles.container}>
-
-        <div onClick={()=>{navigate("/")}} className={Styles.home}>Car Rental</div>
+        <div onClick={()=>{navigate("/")}} className={Styles.homewrapper}>
+          <img src={logo} className={Styles.logo}></img>
+          <div className={Styles.home}>Golden Gear Drive</div>
+        </div>
+        
         {state.token!==''
          ? 
          <div className={Styles.wrapper}>

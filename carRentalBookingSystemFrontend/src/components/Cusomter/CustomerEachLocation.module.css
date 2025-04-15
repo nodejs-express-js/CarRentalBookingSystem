@@ -1,27 +1,69 @@
+/* CustomerEachLocation.module.css */
 .container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-  }
-  
-  .card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .card:hover {
-    transform: scale(1.02);
-  }
-  
-  .card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-  }
-  
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr)); /* Responsive grid */
+  gap:1rem;
+  padding: 20px;
+
+}
+
+.heading {
+  font-size: 2rem;
+  color: var(--thrid-color);
+  text-align: center;
+  grid-column: 1 / -1; /* Span across the entire grid */
+  margin-bottom: 20px;
+}
+
+.card {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  object-fit: cover;
+  aspect-ratio: 16 / 9; /* Maintain aspect ratio */
+}
+
+.infoItem {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: var(--fourth-color);
+}
+
+.infoItem strong {
+  font-weight: bold;
+  color: var(--fourth-color-light); /* You might want to define a lighter shade */
+  margin-right: 5px;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 15px;
+  grid-column: 1 / -1; /* Span across the entire grid */
+}
+
+.loading {
+  color: var(--third-color);
+}
+
+.error {
+  color: #dc3545;
+}

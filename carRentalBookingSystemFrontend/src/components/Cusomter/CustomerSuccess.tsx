@@ -10,28 +10,34 @@
     const bookingData = state as BookingResponse;
     const { booking, car } = bookingData;
     return (
-      <>
-        <Navbar />
-        <div className={styles.successContainer}>
-          <h2 className={styles.successTitle}>Booking Successful 🎉</h2>
-          <div className={styles.details}>
-            <h3>Booking Details</h3>
-            <p><strong>Card Holder Name:</strong> {booking.cardHolderName}</p>
-            <p><strong>Card Type:</strong> {booking.cardType}</p>
-            <p><strong>Booking Date:</strong> {new Date(booking.bookingDate).toLocaleDateString()}</p>
-            <p><strong>Booking ID:</strong> #{booking.id}</p>
-          </div>
-  
-          <div className={styles.details}>
-            <h3 >Car Details</h3>
-            <img src={car.photo} alt={`${car.make} ${car.model}`} className={styles.carImage} />
-            <p><strong>Make:</strong> {car.make}</p>
-            <p><strong>Model:</strong> {car.model}</p>
-            <p><strong>Year:</strong> {car.year}</p>
-            <p><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
-          </div>
-        </div>
-      </>
+          <>
+            <Navbar />
+            <div className={styles.successContainer}>
+              <h2 className={styles.successTitle}>Booking Successful 🎉</h2>
+
+              <div className={styles.detailsSection}>
+                <h3 className={styles.sectionTitle}>Booking Details</h3>
+                <p className={styles.detailItem}><strong>Card Holder Name:</strong> {booking.cardHolderName}</p>
+                <p className={styles.detailItem}><strong>Card Type:</strong> {booking.cardType}</p>
+                <p className={styles.detailItem}><strong>Booking Date:</strong> {new Date(booking.bookingDate).toLocaleDateString()}</p>
+                <p className={styles.detailItem}><strong>Booking ID:</strong> #{booking.id}</p>
+              </div>
+
+              <div className={styles.detailsSection}>
+                <h3 className={styles.sectionTitle}>Car Details</h3>
+                <img
+                  src={car.photo}
+                  alt={`${car.make} ${car.model}`}
+                  className={styles.carImage}
+                />
+                <p className={styles.detailItem}><strong>Make:</strong> {car.make}</p>
+                <p className={styles.detailItem}><strong>Model:</strong> {car.model}</p>
+                <p className={styles.detailItem}><strong>Year:</strong> {car.year}</p>
+                <p className={styles.detailItem}><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
+              </div>
+            </div>
+          </>
+
     );
 };
 

@@ -2,7 +2,7 @@
 import { useLocation } from 'react-router-dom';
 import { Car } from '../../hooks/customer/useCustomerFetchEachLocationCars';
 import Navbar from './Navbar';
-import Styles from "./CustomerBooking.module.css"
+import styles from "./CustomerBooking.module.css"
 import { useState } from 'react';
 
 import useCustomerBooking,{bookingType} from "../../hooks/customer/useCustomerBooking"
@@ -46,53 +46,90 @@ const CustomerBooking = () => {
 
   return (
     <>
-    <Navbar></Navbar>
-    <div key={car.id} className={Styles.container}>
-        <img src={car.photo} alt={`${car.make} ${car.model}`} />
-        <p><strong>Make:</strong> {car.make}</p>
-        <p><strong>Model:</strong> {car.model}</p>
-        <p><strong>Year:</strong> {car.year}</p>
-        <p><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
+    <Navbar />
+    <div className={styles.outercontainer}>
+        <div key={car.id} className={styles.container}>
+            <img
+              src={car.photo}
+              alt={`${car.make} ${car.model}`}
+              className={styles.carImage}
+            />
+            <p className={styles.carDetail}><strong>Make:</strong> {car.make}</p>
+            <p className={styles.carDetail}><strong>Model:</strong> {car.model}</p>
+            <p className={styles.carDetail}><strong>Year:</strong> {car.year}</p>
+            <p className={styles.carDetail}><strong>Price Per Day:</strong> ${car.pricePerDay}</p>
+          </div>
+        
+          <form onSubmit={bookCar} className={styles.bookingForm}>
+            <label className={styles.label}>Booking Date</label>
+            <input
+              type='date'
+              name='date'
+              value={booking.date}
+              onChange={handleChange}
+              className={styles.input}
+            />
+        
+            <label className={styles.label}>Card Type</label>  
+            <select
+              name="cardType"
+              value={booking.cardType}
+              onChange={handleChange}
+              className={styles.select}
+            >
+              <option value="">-- Select Card Type --</option>
+              <option value="Visa">Visa</option>
+              <option value="MasterCard">MasterCard</option>
+              <option value="Amex">Amex</option>
+            </select>
+        
+            <label className={styles.label}>Card Number</label>
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="\d*"
+              maxLength={16}
+              name="cardNumber"
+              value={booking.cardNumber}
+              onChange={handleChange}
+              className={styles.input}
+            />
+        
+            <label className={styles.label}>CVV</label>
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="\d*"
+              maxLength={3}
+              name="cardCVV"
+              value={booking.cardCVV}
+              onChange={handleChange}
+              className={styles.input}
+            />
+        
+            <label className={styles.label}>Card Holder Name</label>
+            <input
+              type='text'
+              name='cardHolderName'
+              value={booking.cardHolderName}
+              onChange={handleChange}
+              className={styles.input}
+            />
+        
+            <div className={styles.error}>{error}</div>
+        
+            <input
+              type='submit'
+              disabled={loading}
+              className={styles.submitButton}
+            />
+          </form>
+
+
     </div>
-    <form onSubmit={bookCar}>
-        <label>Booking Date</label>
-        <input type='date' name='date' value={booking.date} onChange={handleChange} />
-
-        <label>Card Type</label>  
-        <select name="cardType" value={booking.cardType} onChange={handleChange}>
-          <option value="">-- Select Card Type --</option>
-          <option value="Visa">Visa</option>
-          <option value="MasterCard">MasterCard</option>
-          <option value="Amex">Amex</option>
-        </select>
-          <label>Card Number</label>
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="\d*"
-            maxLength={16}
-            name="cardNumber"
-            value={booking.cardNumber}
-            onChange={handleChange}
-          />
-
-          <label>CVV</label>
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="\d*"
-            maxLength={3}
-            name="cardCVV"
-            value={booking.cardCVV}
-            onChange={handleChange}
-          />
-          <label>Card Holder Name</label>
-          <input type='text' name='cardHolderName' value={booking.cardHolderName} onChange={handleChange} />
-          <div>{error}</div>
-          <input type='submit'  disabled={loading}/>
-    </form>
-
-    </>
+    
+  </>
+  
   )
 }
 

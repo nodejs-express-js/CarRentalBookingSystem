@@ -23,8 +23,8 @@
   padding: 15px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Space out location info and delete icon */
-  position: relative; /* For positioning the delete icon */
+  justify-content: space-between; 
+  position: relative; 
 }
 .locationCard:hover {
   background-color: var(--third-color);
