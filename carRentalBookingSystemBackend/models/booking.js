@@ -19,8 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     bookingDate: DataTypes.DATEONLY,
     carId: DataTypes.INTEGER,
     customerId: DataTypes.INTEGER,
-
-
     cardType: {
       type: DataTypes.STRING,
       allowNull: false
@@ -37,12 +35,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(32),
       allowNull: false
     },
-
-
-
-
-
-
   }, {
     sequelize,
     modelName: 'Booking',

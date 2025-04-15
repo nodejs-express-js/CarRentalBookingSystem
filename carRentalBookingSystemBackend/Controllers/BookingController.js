@@ -19,6 +19,7 @@ try{
         return;
     }
     const currdate=new Date(date)
+    currdate.setSeconds(currdate.getSeconds() + 86401);
     const car=await Car.findOne({
         where:{
             id:carId
@@ -39,13 +40,13 @@ try{
         customerId: req.customer.id,
     })
     
-      
     const url = await getSignedUrl(s3, new GetObjectCommand({Bucket: process.env.AWS_RENTAL_CAR_BUCKET_NAME, Key: car.photo}));
     car.photo=url;
     res.status(200).json({booking,car})
 }
 catch(err){
     try{
+      console.log(err.errors[0].message)
         res.status(500).json({message:err.errors[0].message})
         return;
     }
@@ -114,8 +115,31 @@ try{
 catch{
     res.status(500).json({message:"something went wrong with server"})
 }
+}
 
+const getAllDisabledDates=async(req,res)=>{
+  try{
+    const {carId}=req.body;
+    if(!carId){
+      res.status(400).json({message:"carId is required"})
+      return;
+    }
+    const bookings=await Booking.findAll({
+      where:{
+        carId:carId
+      },
+      attributes: ['bookingDate'],
+    })
+    const ret=[];
+    for(let i=0;i<bookings.length;i++){
+      ret.push(bookings[i].bookingDate)
+    }
+    res.status(200).json({ret:ret})
+  }
+  catch{
+    res.status(500).json({message:"something went wrong with server"})
+  }
 }
 
 
-module.exports={createABooking,getAllBookings}
+module.exports={createABooking,getAllBookings,getAllDisabledDates}

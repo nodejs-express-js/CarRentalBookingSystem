@@ -3,16 +3,19 @@ import { useLocation } from 'react-router-dom';
 import { Car } from '../../hooks/customer/useCustomerFetchEachLocationCars';
 import Navbar from './Navbar';
 import styles from "./CustomerBooking.module.css"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useCustomerBooking,{bookingType} from "../../hooks/customer/useCustomerBooking"
 
-
+import useCustomerDisableDates from '../../hooks/customer/useCustomerDisableDates';
 
 const CustomerBooking = () => {
     const { state } = useLocation();
   const car = state?.car as Car;
   const {error,loading,customerbooking}=useCustomerBooking();
+  const {getdisabledates}=useCustomerDisableDates();
+  const [errorMessage,setErrorMessage]=useState("");
+  const [notallowedDates,setNotAlloowedDates]=useState<string[]>([])
   const [booking, setBooking] = useState<bookingType>({
     date: new Date().toISOString().split('T')[0],
     carId: 0,
@@ -21,18 +24,40 @@ const CustomerBooking = () => {
     cardCVV: '',
     cardHolderName: ''
   });
+
+  useEffect(()=>{
+    const fetch=async()=>{
+      
+      setNotAlloowedDates(await getdisabledates(car.id))
+    }
+    fetch()
+  },[])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-  
     if ((name === 'cardNumber' || name === 'cardCVV') && !/^\d*$/.test(value)) {
       return;
     }
-  
     if (name === 'cardNumber' && value.length > 16) return;
     if (name === 'cardCVV' && value.length > 3) return;
   
     setBooking({ ...booking, [name]: value });
   };
+
+
+
+  const handleDateChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
+    const { name, value } = e.target;
+    const selectedDate = e.target.value;
+    console.log(selectedDate,notallowedDates.includes(selectedDate))
+    if (notallowedDates.includes(selectedDate) && selectedDate !== '') {
+      setErrorMessage('date is not available for booking.');
+      setBooking({ ...booking, date: '' });
+    } else {
+      setBooking({ ...booking, [name]: value });
+      setErrorMessage('');
+    }
+  }
 
   const bookCar = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -54,6 +79,7 @@ const CustomerBooking = () => {
               alt={`${car.make} ${car.model}`}
               className={styles.carImage}
             />
+            <p className={styles.carDetail}><strong>id:</strong> {car.id}</p>
             <p className={styles.carDetail}><strong>Make:</strong> {car.make}</p>
             <p className={styles.carDetail}><strong>Model:</strong> {car.model}</p>
             <p className={styles.carDetail}><strong>Year:</strong> {car.year}</p>
@@ -66,10 +92,10 @@ const CustomerBooking = () => {
               type='date'
               name='date'
               value={booking.date}
-              onChange={handleChange}
+              onChange={handleDateChange}
               className={styles.input}
             />
-        
+            <>{errorMessage}</>
             <label className={styles.label}>Card Type</label>  
             <select
               name="cardType"

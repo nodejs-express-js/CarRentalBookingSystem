@@ -9,10 +9,21 @@ background-color: var(--primary-color);
 color:var(--secondary-color);
   z-index: 100;
 }
-.home{
-    cursor: pointer;
-    font-size: 2rem;
-}
+.homewrapper{
+    display: flex;
+    align-items: center;
+    
+      }
+      .home{
+        cursor: pointer;
+        font-size: 2rem;
+        padding:0 1rem;
+    
+      }
+      .logo{
+        width: 5rem;
+        border-radius: 0.3rem;
+      }
 .profilePic{
 width: 4rem;
 height: 4rem;

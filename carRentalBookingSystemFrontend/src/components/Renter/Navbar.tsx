@@ -3,6 +3,7 @@ import useRenter from "../../hooks/renter/useRenter"
 import Styles from './Navbar.module.css'
 import useRenterLocation from "../../hooks/renter/useRenterLocation";
 import useRenterEachLocation from "../../hooks/renter/useRenterEachLocation";
+import logo from '../../assets/logo.png'
 const Navbar = () => {
     const {state,dispatch}=useRenter();
     const {dispatch:locationdispatch}=useRenterLocation();
@@ -10,8 +11,11 @@ const Navbar = () => {
     const navigate=useNavigate();
   return (
     <div className={Styles.container}>
-
-        <div onClick={()=>{navigate("/renter")}} className={Styles.home}>Car Rental Admin</div>
+        <div onClick={()=>{navigate("/renter")}} className={Styles.homewrapper}>
+          <img src={logo} className={Styles.logo}></img>
+          <div className={Styles.home}>Golden Gear Drive</div>
+        </div>
+        
         {state.token!==''
         
          ? 

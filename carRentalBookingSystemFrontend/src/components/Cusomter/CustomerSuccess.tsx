@@ -19,7 +19,7 @@
                 <h3 className={styles.sectionTitle}>Booking Details</h3>
                 <p className={styles.detailItem}><strong>Card Holder Name:</strong> {booking.cardHolderName}</p>
                 <p className={styles.detailItem}><strong>Card Type:</strong> {booking.cardType}</p>
-                <p className={styles.detailItem}><strong>Booking Date:</strong> {new Date(booking.bookingDate).toLocaleDateString()}</p>
+                <p className={styles.detailItem}><strong>Booking Date:</strong> { booking.bookingDate}</p>
                 <p className={styles.detailItem}><strong>Booking ID:</strong> #{booking.id}</p>
               </div>
 
