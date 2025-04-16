@@ -1,7 +1,15 @@
+====================================== deploying postgres ======================================
+kubectl apply -f pg-secret.yaml
+kubectl apply -f pg-pvc.yaml
+kubectl apply -f pg-statefulset.yaml
+kubectl apply -f pg-service.yaml
+kubectl apply -f pg-migration-job.yaml 
+
 ======================================== deploying backend =======================================
 docker build -t car-rental-backend .
 docker run -d -p 8080:8080 -e DATABASE_HOST="host.docker.internal" car-rental-backend
-
+docker tag car-rental-backend us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-backend
+docker push us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-backend
 
 ======================================== deploying frontend =======================================
 
@@ -9,8 +17,8 @@ docker run -d -p 8080:8080 -e DATABASE_HOST="host.docker.internal" car-rental-ba
 docker build -t car-rental-frontend .
 gcloud auth login
 gcloud config set project car-rental-456917
-docker tag car-rental-frontend us-east1-docker.pkg.dev/car-rental-456917/car-rental-frontend/car-rental-frontend
-docker push us-east1-docker.pkg.dev/car-rental-456917/car-rental-frontend/car-rental-frontend
+docker tag car-rental-frontend us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-frontend
+docker push us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-frontend
 
 ++++++++++++++++++++++++++ deploying image to gke +++++++++++++++++++++++++++++++++++
 kubectl apply -f frontend_deployment.yaml

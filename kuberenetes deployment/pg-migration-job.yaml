@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sequelize-migration-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: migrate
+        image: us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-backend
+        command: ["npx", "sequelize-cli", "db:migrate"]
+        env:
+        - name: PORT
+          value: "8080"
+        - name: DATABASE_USER_NAME
+          value: "postgres"
+        - name: DATABASE_PASSWORD
+          value: "Kube@10071999"
+        - name: DATABASE_HOST
+          value: "postgres"  # Points to the PostgreSQL service in the same namespace
+        - name: DATABASE_NAME
+          value: "carRental"
+      restartPolicy: Never
+  backoffLimit: 4

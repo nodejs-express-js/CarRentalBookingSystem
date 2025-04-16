@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-rental-backend-deployment
+spec:
+  replicas: 2 # Adjust as needed for desired number of pods
+  selector:
+    matchLabels:
+      app: car-rental-backend
+  template:
+    metadata:
+      labels:
+        app: car-rental-backend
+    spec:
+      containers:
+        - name: car-rental-backend
+          image: us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-backend # Replace with your Docker image
+          ports:
+            - containerPort: 8080 # Replace with the port your Express.js app listens on
+          env:
+            - name: DATABASE_USER_NAME
+              value: "postgres"
+            - name: DATABASE_PASSWORD
+              value: "Kube@10071999"
+            - name: DATABASE_NAME
+              value: "carRental"
+            - name: DATABASE_HOST
+              value: "postgres" # Kubernetes DNS name for your PostgreSQL service
