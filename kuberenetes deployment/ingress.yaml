@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: car-rental-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "car-rental-ip"
+    networking.gke.io/managed-certificates: "car-rental-cert" # Reference the managed certificate
+spec:
+  rules:
+  - host: goldendrive.vishalgandla.online
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: car-rental-frontend-service
+            port:
+              number: 80

@@ -1,0 +1,7 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: car-rental-cert
+spec:
+  domains:
+    - goldendrive.vishalgandla.online  # Replace with your actual domain

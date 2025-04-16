@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: car-rental-frontend-service
+spec:
+  selector:
+    app: car-rental-frontend
+  ports:
+  - protocol: TCP
+    port: 80 # The port the service exposes
+    targetPort: 80 # The target port on the container
+  type: ClusterIP

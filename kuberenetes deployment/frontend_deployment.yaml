@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-rental-frontend-deployment
+spec:
+  replicas: 2 # Adjust the number of desired replicas
+  selector:
+    matchLabels:
+      app: car-rental-frontend
+  template:
+    metadata:
+      labels:
+        app: car-rental-frontend
+    spec:
+      containers:
+      - name: car-rental-frontend
+        image: us-east1-docker.pkg.dev/car-rental-456917/car-rental-frontend/car-rental-frontend
+        ports:
+        - containerPort: 80

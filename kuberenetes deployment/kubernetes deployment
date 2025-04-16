@@ -1,0 +1,27 @@
+
+======================================== deploying frontend =======================================
+
++++++++++++++++++++++++++++ add frontend to gcr +++++++++++++++++++++++++++++++++++++++++++
+docker build -t car-rental-frontend .
+gcloud auth login
+gcloud config set project car-rental-456917
+docker tag car-rental-frontend us-east1-docker.pkg.dev/car-rental-456917/car-rental-frontend/car-rental-frontend
+docker push us-east1-docker.pkg.dev/car-rental-456917/car-rental-frontend/car-rental-frontend
+
+++++++++++++++++++++++++++ deploying image to gke +++++++++++++++++++++++++++++++++++
+kubectl apply -f frontend_deployment.yaml
+
+------------------------------ allocate a ip address ------------------------------
+gcloud compute addresses create recipe-app --global
+gcloud compute addresses list --global
+gcloud compute addresses describe recipe-app --global --format="value(address)"
+
+---------------------------- create a certificate and attach it to ingress ------------------------------------
+attach the ip address to ingress 
+kubectl apply -f managedcert.yaml
+kubectl apply -f ingress.yaml
+
+
+
+
+
