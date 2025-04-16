@@ -14,6 +14,16 @@ require("dotenv").config()
 app.use(express.json());
 app.use(cors())
 
+
+app.get('/', (req, res) => {
+    res.sendStatus(200);  // Root health check for load balancer
+  });
+  app.get('/healthz', (req, res) => {
+    res.sendStatus(200);  // Additional readiness probe endpoint
+  });
+  
+
+
 app.use(process.env.ROUTES_PATH_PREFIX+"/renter",renterRouter)
 app.use(process.env.ROUTES_PATH_PREFIX+"/protected",renterMiddleware)
 app.use(process.env.ROUTES_PATH_PREFIX+"/protected/renterhome",renterHomeRouter)

@@ -1,3 +1,7 @@
+======================================== deploying backend =======================================
+docker build -t car-rental-backend .
+docker run -d -p 8080:8080 -e DATABASE_HOST="host.docker.internal" car-rental-backend
+
 
 ======================================== deploying frontend =======================================
 
@@ -20,6 +24,9 @@ gcloud compute addresses describe recipe-app --global --format="value(address)"
 attach the ip address to ingress 
 kubectl apply -f managedcert.yaml
 kubectl apply -f ingress.yaml
+
+
+
 
 
 

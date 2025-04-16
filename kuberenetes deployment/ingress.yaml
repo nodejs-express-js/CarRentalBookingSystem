@@ -18,3 +18,13 @@ spec:
             name: car-rental-frontend-service
             port:
               number: 80
+  - host: goldendrive.vishalgandla.online
+    http:
+      paths:
+      - path: /backend
+        pathType: Prefix
+        backend:
+          service:
+            name: car-rental-backend-service
+            port:
+              number: 80
