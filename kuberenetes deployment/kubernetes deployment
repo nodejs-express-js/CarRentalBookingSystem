@@ -48,12 +48,14 @@ docker push us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-fron
 
 ++++++++++++++++++++++++++ deploying image to gke +++++++++++++++++++++++++++++++++++
 kubectl apply -f frontend_deployment.yaml
+kubectl apply -f frontend_service.yaml
 
 
 
 
 
-
+kubectl apply -f managedcert.yaml
+kubectl apply -f ingress.yaml
 
 
 
