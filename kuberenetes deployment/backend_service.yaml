@@ -9,4 +9,4 @@ spec:
     - protocol: TCP
       port: 80 # The external port you want to expose
       targetPort: 8080 # The container port your app listens on
-  type: LoadBalancer
+  type: ClusterIP

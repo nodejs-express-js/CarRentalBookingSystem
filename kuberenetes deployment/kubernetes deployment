@@ -4,6 +4,12 @@ kubectl apply -f pg-pvc.yaml
 kubectl apply -f pg-statefulset.yaml
 kubectl apply -f pg-service.yaml
 kubectl apply -f pg-migration-job.yaml 
+kubectl port-forward svc/postgres 5432:5432 #check if database is working
+
+
+
+
+
 
 ======================================== deploying backend =======================================
 docker build -t car-rental-backend .
@@ -11,8 +17,28 @@ docker run -d -p 8080:8080 -e DATABASE_HOST="host.docker.internal" car-rental-ba
 docker tag car-rental-backend us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-backend
 docker push us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-backend
 
-======================================== deploying frontend =======================================
+kubectl apply -f backend_deployment.yaml 
+kubectl apply -f backend_service.yaml 
+kubectl port-forward svc/car-rental-backend-service 80:80
+kubectl apply -f managedcert.yaml
+kubectl apply -f ingress.yaml
 
+------------------------------ allocate a ip address ------------------------------
+gcloud compute addresses create car-rental-ip --global
+gcloud compute addresses list --global
+gcloud compute addresses describe car-rental-ip --global --format="value(address)"
+
+---------------------------- create a certificate and attach it to ingress ------------------------------------
+attach the ip address to ingress 
+kubectl apply -f managedcert.yaml
+kubectl apply -f ingress.yaml
+
+
+
+
+
+
+======================================== deploying frontend =======================================
 +++++++++++++++++++++++++++ add frontend to gcr +++++++++++++++++++++++++++++++++++++++++++
 docker build -t car-rental-frontend .
 gcloud auth login
@@ -23,15 +49,7 @@ docker push us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-fron
 ++++++++++++++++++++++++++ deploying image to gke +++++++++++++++++++++++++++++++++++
 kubectl apply -f frontend_deployment.yaml
 
------------------------------- allocate a ip address ------------------------------
-gcloud compute addresses create recipe-app --global
-gcloud compute addresses list --global
-gcloud compute addresses describe recipe-app --global --format="value(address)"
 
----------------------------- create a certificate and attach it to ingress ------------------------------------
-attach the ip address to ingress 
-kubectl apply -f managedcert.yaml
-kubectl apply -f ingress.yaml
 
 
 

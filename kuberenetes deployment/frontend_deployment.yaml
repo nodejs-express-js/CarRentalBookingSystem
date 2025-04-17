@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: car-rental-frontend
-        image: us-east1-docker.pkg.dev/car-rental-456917/car-rental-frontend/car-rental-frontend
+        image: us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-frontend
         ports:
         - containerPort: 80
