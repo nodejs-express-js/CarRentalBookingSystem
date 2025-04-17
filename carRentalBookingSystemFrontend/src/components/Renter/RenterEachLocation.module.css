@@ -103,7 +103,7 @@
   border-radius: 6px; /* More rounded input fields */
   margin-bottom: 15px; /* Increased margin */
   font-size: 1rem;
-  color: var(--secondary-color); /* Using secondary color for input text */
+  color: var(--third-color); /* Using secondary color for input text */
   background-color: white; /* Using white for input background */
 }
 
@@ -114,7 +114,7 @@
   margin-bottom: 15px;
   font-size: 1rem;
   background-color: white;
-  color: var(--secondary-color);
+  color: var(--third-color);
 }
 
 .carFormContainer input[type="file"]::-webkit-file-upload-button {

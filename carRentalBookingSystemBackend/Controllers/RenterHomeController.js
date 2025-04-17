@@ -4,6 +4,7 @@ const validator = require("validator")
 
 const {S3Client,PutObjectCommand, GetObjectCommand ,DeleteObjectCommand}=require("@aws-sdk/client-s3")
 const {getSignedUrl }=require("@aws-sdk/s3-request-presigner")
+const crypto = require('node:crypto');
 
 const MAX_SIZE = 2 * 1024 * 1024;
 

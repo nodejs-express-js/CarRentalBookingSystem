@@ -1,3 +1,5 @@
+gcloud auth login
+gcloud config set project car-rental-456917
 ====================================== deploying postgres ======================================
 kubectl apply -f pg-secret.yaml
 kubectl apply -f pg-pvc.yaml
@@ -20,8 +22,7 @@ docker push us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-back
 kubectl apply -f backend_deployment.yaml 
 kubectl apply -f backend_service.yaml 
 kubectl port-forward svc/car-rental-backend-service 80:80
-kubectl apply -f managedcert.yaml
-kubectl apply -f ingress.yaml
+
 
 ------------------------------ allocate a ip address ------------------------------
 gcloud compute addresses create car-rental-ip --global
@@ -29,9 +30,10 @@ gcloud compute addresses list --global
 gcloud compute addresses describe car-rental-ip --global --format="value(address)"
 
 ---------------------------- create a certificate and attach it to ingress ------------------------------------
-attach the ip address to ingress 
-kubectl apply -f managedcert.yaml
+attach the ip address to ingress and domain porvider
 kubectl apply -f ingress.yaml
+kubectl apply -f managedcert.yaml
+
 
 
 
@@ -41,18 +43,13 @@ kubectl apply -f ingress.yaml
 ======================================== deploying frontend =======================================
 +++++++++++++++++++++++++++ add frontend to gcr +++++++++++++++++++++++++++++++++++++++++++
 docker build -t car-rental-frontend .
-gcloud auth login
-gcloud config set project car-rental-456917
+
 docker tag car-rental-frontend us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-frontend
 docker push us-east1-docker.pkg.dev/car-rental-456917/car-rental/car-rental-frontend
 
 ++++++++++++++++++++++++++ deploying image to gke +++++++++++++++++++++++++++++++++++
 kubectl apply -f frontend_deployment.yaml
 kubectl apply -f frontend_service.yaml
-
-
-
-
 
 kubectl apply -f managedcert.yaml
 kubectl apply -f ingress.yaml

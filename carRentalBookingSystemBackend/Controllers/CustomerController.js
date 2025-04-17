@@ -5,6 +5,8 @@ const jwt=require("jsonwebtoken")
 const validator=require("validator")
 const {S3Client,PutObjectCommand, GetObjectCommand }=require("@aws-sdk/client-s3")
 const {getSignedUrl }=require("@aws-sdk/s3-request-presigner")
+const crypto = require('node:crypto');
+
 require("dotenv").config()
 const MAX_SIZE = 2 * 1024 * 1024;
 const s3 = new S3Client({
@@ -30,7 +32,8 @@ const login=async(req,res)=>{
         const token=jwttoken(customer.id)
         res.status(200).send({email: customer.email,token: token,profilePicture: url})
     }
-    catch{
+    catch(err){
+        console.log(err);
         res.status(500).send({message:"signup request failed"});
     }
 }
@@ -66,8 +69,9 @@ const signup=async(req,res)=>{
         const url = await getSignedUrl(s3, command2, { expiresIn: 3600*24 }); 
         res.status(201).send({email: customer.email,token: jwttoken(customer.id),profilePicture: url});
     }
-    catch
+    catch(err)
     {
+        console.log(err);
         res.status(500).send({message:"signup request failed"});
     }
 }
